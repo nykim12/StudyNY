@@ -11,4 +11,25 @@
 			(3) fmt library			: 형식 (날짜/시간, 숫자 등)
 			(4) sql library
 			(5) functions library 
-		
+
+
+	2.	EL 연산자
+		1)	${a + b}
+		2)	${a - b}
+		3)	${a * b}
+		4)	${a / b}	${a div b}
+		5)	${a % b}	${a mod b}
+
+		6)	${a > b}	${a gt b}	gt : greater than
+		7)	${a >= b}	${a ge b}	ge : greate than equal
+		8)	${a < b}	${a lt b}	lt : less than
+		9)	${a <= b}	${a le b}	le : less than equal
+		10)	${a == b}	${a eq b}	eq : equal
+		11)	${a != b}	${a ne b}	ne : not equal
+		12)	${a > b and a > c}
+		13)	${a > b or a > c}
+		14)	${not a > b}
+		15)	{empty a}
+
+		16)	{a > b ? a : b}
+
