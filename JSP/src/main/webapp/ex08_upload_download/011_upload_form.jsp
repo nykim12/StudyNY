@@ -43,7 +43,7 @@
 <form action="012_upload.jsp" method="post" enctype="multipart/form-data">
 <h1>파일 첨부하기</h1>
 <div>
-	<input type="text" name="writer" placeholder="작성자">
+	<input type="text" name="uploader" placeholder="작성자">
 </div>
 <div>
 	<input type="file" name="filename" id="filename">

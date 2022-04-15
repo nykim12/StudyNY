@@ -28,5 +28,6 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Installer/cos.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
