@@ -18,5 +18,6 @@ public class Now implements Myservice {
 //		응답 결과는 request에 속성(attribute)으로 저장한다.
 		request.setAttribute("result", now);
 	}
+	
 
 }

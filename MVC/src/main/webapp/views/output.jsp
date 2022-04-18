@@ -10,6 +10,7 @@
 
 	<%-- request에 저장된 속성(Attribute) 확인 : EL --%>
 	<h1>${result}</h1>
+	
 
 </body>
 </html>

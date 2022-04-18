@@ -10,7 +10,7 @@ public class Lotto implements Myservice {
 
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 
-//		응답
+		//	응답
 		Set<Integer> lotto = new HashSet<>();
 		while (lotto.size() != 6) {
 			lotto.add((int) (Math.random() * 45) + 1);
