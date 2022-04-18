@@ -16,6 +16,7 @@ public class Lotto implements Myservice {
 			lotto.add((int) (Math.random() * 45) + 1);
 		}
 
+		
 //		응답 결과는 request에 속성(attribute)으로 저장
 		request.setAttribute("result", lotto.toString());
 
