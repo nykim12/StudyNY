@@ -8,11 +8,8 @@
 </head>
 <body>
 
-	<a href="/MVC/today.do">현재 날짜 출력하기</a>
-
-	<hr>
-
-	<a href="/MVC/now.do">현재 시간 출력하기</a>
+	<%-- request에 저장된 속성(Attribute) 확인 : EL --%>
+	<h1>${result}</h1>
 
 </body>
 </html>

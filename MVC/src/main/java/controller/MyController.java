@@ -31,21 +31,22 @@ public class MyController extends HttpServlet {
 		String command = requestURI.substring(contextPath.length() + 1); // /today.to
 
 		switch (command) {
-		case "today.to":
+		case "today.do":
 			Today today = new Today();
-			today.execute(request, response);
+			today.execute(request, response); // request.setAttribute("result", today);
 			break;
 		case "now.do":
 			Now now = new Now();
-			now.execute(request, response);
+			now.execute(request, response); // request.setAttribute("result", now);
 			break;
 		}
 
+//		request를 응답 View로 전달(forward)한다.
+		request.getRequestDispatcher("/views/output.jsp").forward(request, response);
+
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 
