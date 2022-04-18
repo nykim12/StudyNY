@@ -7,9 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<%-- request에 저장된 속성(Attribute) 확인 : EL --%>
-	<h1>${result}</h1>
-
+<h1>홈페이지에 오신 것을 환영합니다.</h1>
 </body>
 </html>

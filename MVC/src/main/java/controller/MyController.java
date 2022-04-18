@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.ActionForward;
 import model.Lotto;
 import model.Myservice;
 import model.Now;
@@ -36,6 +37,9 @@ public class MyController extends HttpServlet {
 //		모든 model은 MyService 인터페이스를 구현하는 클래스이므로, MyService 타입의 인스턴스이다.
 		Myservice service = null;
 
+//		ActionForward 인스턴스
+		ActionForward af = null;
+
 		switch (command) {
 		case "today.do":
 			service = new Today();
@@ -50,7 +54,20 @@ public class MyController extends HttpServlet {
 
 //		model의 실행(execute() 메소드의 호출)
 		if (service != null) {
-			service.execute(request, response);
+			af = service.execute(request, response);
+		}
+
+//		model이 반환한 어디로 어떻게 정보(ActionForward)를 이용해서 이동
+//		af가 null인 경우가 있음
+//		 (1) model에서 직접 response를 이용해 응답한 경우
+//		 (2) ajax 처리
+
+		if (af != null) {
+			if (af.isRedirect()) {
+				response.sendRedirect(af.getView());
+			} else {
+				request.getRequestDispatcher(af.getView()).forward(request, response);
+			}
 		}
 
 //		request를 응답 View로 전달(forward)한다.
