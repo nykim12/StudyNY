@@ -3,6 +3,8 @@ package repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -78,6 +80,32 @@ public class EmpDAO {
 			close(con, ps, null);
 		}
 		return res;
+	}
+
+	// 3. 전체사원목록 가져오기
+	// 1) 매개변수 : 없음
+	// 2) 반환 : List<Emp> (여러 사원의 정보)
+	public List<Emp> selectEmpList() {
+		List<Emp> list = new ArrayList<Emp>();
+		try {
+			con = dataSource.getConnection();
+			sql = "SELECT EMPNO, NAME, DEPT, HIRED FROM EMP ORDER BY EMPNO DESC";
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery(); // SELECT문은 executeQuery() 메소드 실행
+			while (rs.next()) {
+				Emp emp = new Emp();
+				emp.setEmpNo(rs.getLong("EMPNO"));
+				emp.setName(rs.getString("NAME"));
+				emp.setDept(rs.getString("DEPT"));
+				emp.setHired(rs.getDate("HIRED"));
+				list.add(emp);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps, rs);
+		}
+		return list;
 	}
 
 }

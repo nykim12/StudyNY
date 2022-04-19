@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import common.ActionForward;
 import service.AddService;
 import service.EmpService;
+import service.ListService;
 
 @WebServlet("*.do")
 public class EmpController extends HttpServlet {
@@ -39,8 +40,14 @@ public class EmpController extends HttpServlet {
 
 		// Service 선택
 		switch (command) {
+		case "insertPage.do":
+			af = new ActionForward("emp/insert.jsp", false); // 단순 이동은 forward 하기.
+			break;
 		case "insert.do":
 			service = new AddService();
+			break;
+		case "list.do":
+			service = new ListService();
 			break;
 		}
 
