@@ -13,5 +13,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="C:/Installer/lombok-1.18.22.jar"/>
+	<classpathentry kind="lib" path="C:/Installer/ojdbc6.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -1,6 +1,4 @@
-package domain;
-
-import java.sql.Date;
+package common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,9 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Emp {
-	private Long empNo;
-	private String name;
-	private String dept;
-	private Date hired;
+public class ActionForward {
+	private String view;         // getView(),    setView()
+	private boolean isRedirect;  // isRedirect(), setRedirect()
 }
