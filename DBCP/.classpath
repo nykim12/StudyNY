@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="C:/Installer/ojdbc6.jar"/>
 	<classpathentry kind="lib" path="C:/Installer/taglibs-standard-impl-1.2.5.jar"/>
 	<classpathentry kind="lib" path="C:/Installer/taglibs-standard-spec-1.2.5.jar"/>
+	<classpathentry kind="lib" path="C:/Installer/mybatis-3.5.9.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

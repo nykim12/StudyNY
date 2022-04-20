@@ -21,8 +21,10 @@ $(document).ready(function(){
 	});
 	var btnRemove = $('#btn_remove');
 	btnRemove.click(function() {
+		if(confirm('삭제할까요?')) {
 		f.attr('action', '/DBCP/remove.do');
 		f.submit();
+		}
 	});
 });
 </script>
