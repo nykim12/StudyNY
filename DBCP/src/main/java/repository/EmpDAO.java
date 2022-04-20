@@ -5,12 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-
 import domain.Emp;
 
 public class EmpDAO {
@@ -106,6 +104,51 @@ public class EmpDAO {
 			close(con, ps, rs);
 		}
 		return list;
+	}
+
+//	4.	사원상세정보 가져오기
+//		1) 매개변수	: Long empNo (사원번호)
+//		2) 반환 		: Emp (사원 1명의 정보)
+	public Emp selectEmpByEmpNo(Long empNo) {
+		Emp emp = null;
+		try {
+			con = dataSource.getConnection();
+			sql = "SELECT EMPNO, NAME, DEPT, HIRED FROM EMP WHERE EMPNO = ?";
+			ps = con.prepareStatement(sql);
+			ps.setLong(1, empNo);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				emp = new Emp();
+				emp.setEmpNo(rs.getLong("EMPNO"));
+				emp.setName(rs.getString("NAME"));
+				emp.setDept(rs.getString("DEPT"));
+				emp.setHired(rs.getDate("HIRED"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps, rs);
+		}
+		return emp;
+	}
+
+//	5. 사원정보 수정하기
+	public int updateEmp(Emp emp) {
+		int res = 0;
+		try {
+			con = dataSource.getConnection(); // Connection 대여
+			sql = "UPDATE EMP SET NAME = ? , DEPT = ? WHERE EMPNO = ?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, emp.getName());
+			ps.setString(2, emp.getDept());
+			ps.setLong(3, emp.getEmpNo());
+			res = ps.executeUpdate(); // DML(INSERT, UPDATE, DELETE)은 executeUpdate() 메소드 사용
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps, null);
+		}
+		return res;
 	}
 
 }

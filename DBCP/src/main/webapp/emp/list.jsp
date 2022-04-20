@@ -28,7 +28,7 @@
 				<c:forEach items="${list}" var="emp">
 					<tr>
 						<td>${emp.empNo}</td>
-						<td>${emp.name}</td>
+						<td><a href="/DBCP/detail.do?empNo=${emp.empNo}">${emp.name}</a></td>
 						<td>${emp.dept}</td>
 					</tr>
 				</c:forEach>
