@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import common.ActionForward;
 import service.AddService;
+import service.DeleteService;
 import service.DetailService;
 import service.EmpService;
 import service.ListService;
@@ -56,6 +57,8 @@ public class EmpController extends HttpServlet {
 			break;
 		case "modify.do":
 			service = new ModifyService();
+		case "remove.do":
+			service = new DeleteService();
 		}
 
 		// Service 실행

@@ -19,6 +19,11 @@ $(document).ready(function(){
 		f.attr('action', '/DBCP/modify.do');
 		f.submit();
 	});
+	var btnRemove = $('#btn_remove');
+	btnRemove.click(function() {
+		f.attr('action', '/DBCP/remove.do');
+		f.submit();
+	});
 });
 </script>
 </head>

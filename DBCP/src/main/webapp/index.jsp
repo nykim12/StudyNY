@@ -8,11 +8,11 @@
 </head>
 <body>
 
-	<a href="/DBCP/insertPage.do">사원등록하러가기</a>
+	<a href="/DBCP/insertPage.do">사원 등록하기</a>
 
 	<br>
 
-	<a href="/DBCP/list.do">사원목록보기</a>
+	<a href="/DBCP/list.do">사원 목록보기</a>
 	
 
 

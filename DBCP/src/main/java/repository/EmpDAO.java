@@ -151,4 +151,21 @@ public class EmpDAO {
 		return res;
 	}
 
+//	6. 사원정보 수정하기
+	public int removeEmp(Emp emp) {
+		int res = 0;
+		try {
+			con = dataSource.getConnection(); // Connection 대여
+			sql = "DELETE FROM EMP WHERE EMPNO = ?";
+			ps = con.prepareStatement(sql);
+			ps.setLong(1, emp.getEmpNo());
+			res = ps.executeUpdate(); // DML(INSERT, UPDATE, DELETE)은 executeUpdate() 메소드 사용
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps, null);
+		}
+		return res;
+	}
+
 }
