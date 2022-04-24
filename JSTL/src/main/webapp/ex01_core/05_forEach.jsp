@@ -21,7 +21,7 @@
 
 
 	<c:forEach var="n" begin="1" end="5" step="1">
-		${n}&nbsp;	
+		${n}&nbsp;
 	</c:forEach>
 
 	<hr>

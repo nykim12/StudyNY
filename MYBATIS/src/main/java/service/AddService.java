@@ -2,8 +2,8 @@ package service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
+//import java.util.HashMap;
+//import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import common.ActionForward;
@@ -25,10 +25,10 @@ public class AddService implements EmpService {
 		emp.setDept(dept);
 		emp.setSalary(salary);
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("name", name);
-		map.put("dept", dept);
-		map.put("salary", salary);
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("name", name);
+//		map.put("dept", dept);
+//		map.put("salary", salary);
 
 		int res = EmpDAO.getInstance().insertEmp(emp);
 
