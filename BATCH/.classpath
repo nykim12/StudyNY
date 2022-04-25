@@ -6,16 +6,27 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Installer/lombok-1.18.22.jar"/>
 	<classpathentry kind="lib" path="C:/Installer/mybatis-3.5.9.jar"/>
 	<classpathentry kind="lib" path="C:/Installer/ojdbc6.jar"/>
 	<classpathentry kind="lib" path="C:/Installer/taglibs-standard-impl-1.2.5.jar"/>
 	<classpathentry kind="lib" path="C:/Installer/taglibs-standard-spec-1.2.5.jar"/>
+	<classpathentry kind="lib" path="C:/Installer/lombok-1.18.22.jar"/>
+	<classpathentry kind="lib" path="C:/Installer/quartz/c3p0-0.9.5.2.jar"/>
+	<classpathentry kind="lib" path="C:/Installer/quartz/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="C:/Installer/quartz/quartz-2.3.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="C:/Installer/quartz/quartz-jobs-2.3.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="C:/Installer/quartz/slf4j-api-1.7.7.jar"/>
+	<classpathentry kind="lib" path="C:/Installer/quartz/slf4j-log4j12-1.7.7.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
