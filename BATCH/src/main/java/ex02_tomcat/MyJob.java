@@ -17,9 +17,9 @@ public class MyJob implements Job {
 
 		try {
 			File file = new File("C:\\Users\\GDJ45\\git\\studyNY\\BATCH\\myJob.txt");
-			FileWriter fw = new FileWriter((file));
+			FileWriter fw = new FileWriter(file);
 			fw.write("Hello World\n");
-			fw.write(new SimpleDateFormat("yyyy-mm-dd").format(new Date()));
+			fw.write(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 			fw.close();
 		} catch (IOException e) {
 			e.printStackTrace();

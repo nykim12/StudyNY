@@ -35,6 +35,13 @@ public class StudentDAO {
 		return list;
 	}
 
+	public List<Student> getStudentRank() {
+		SqlSession ss = factory.openSession();
+		List<Student> list = ss.selectList("mybatis.mapper.student.getStudentRank");
+		ss.close();
+		return list;
+	}
+
 	public int getTotalCount() {
 		SqlSession ss = factory.openSession();
 		int getTotalCount = ss.selectOne("mybatis.mapper.student.getTotalCount");

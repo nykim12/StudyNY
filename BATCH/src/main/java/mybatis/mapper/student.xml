@@ -44,6 +44,17 @@
 		  FROM STUDENT
 	</select>
 	
+	<select id="getStudentRank" resultType="domain.Student">
+		SELECT S.RANK, S.NAME, S.AVG, S.STU_NO
+			FROM (SELECT RANK() OVER (ORDER BY AVG DESC) AS RANK, STU_NO, NAME, AVG FROM STUDENT) S
+		WHERE S.RANK BETWEEN 1 AND 3
+		
+		<!-- SELECT S.RANK, S.NAME, S.AVG
+		  FROM (SELECT RANK() OVER(ORDER BY AVG DESC) AS RANK, NAME, AVG
+		          FROM STUDENT) S
+		 WHERE S.RANK BETWEEN 1 AND 3 -->
+	</select>
+	
 	<insert id="insertStudent" parameterType="domain.Student">
 		INSERT INTO STUDENT(STU_NO, NAME, KOR, ENG, MAT, AVG, GRADE)
 			VALUES (STUDENT_SEQ.NEXTVAL, #{name}, #{kor}, #{eng}, #{mat}, #{avg}, #{grade})
