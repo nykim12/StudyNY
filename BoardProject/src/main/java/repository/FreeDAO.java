@@ -1,7 +1,6 @@
 package repository;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -47,9 +46,9 @@ public class FreeDAO {
 		return res;
 	}
 
-	public int updateFree(Map<String, String> map) {
+	public int updateFree(Free free) {
 		SqlSession ss = factory.openSession();
-		int res = ss.update("mybatis.mapper.free.updateFree", map);
+		int res = ss.update("mybatis.mapper.free.updateFree", free);
 		if (res > 0) {
 			ss.commit();
 		}

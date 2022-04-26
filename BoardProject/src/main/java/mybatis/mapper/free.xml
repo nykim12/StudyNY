@@ -26,8 +26,8 @@
 		DELETE FROM FREE WHERE FREENO = #{freeno}
 	</delete>
 	
-	<update id="updateFree" parameterType="map">
-		UPDATE FREE SET TITLE = #{title}, CONTENT = #{content} WHERE TITLE = #{title}
+	<update id="updateFree" parameterType="domain.Free">
+		UPDATE FREE SET TITLE = #{title}, CONTENT = #{content} WHERE FREENO = #{freeno}
 	</update>
 
   </mapper>

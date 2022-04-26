@@ -6,6 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script>
+$(document).ready(function(){
+	
+	// 상세 버튼의 이전 형제로 학번을 저장해 두고 사용한다.
+	$('#detail').click(function(){
+	    location.href='/BoardProject/detail.do?freeNo=' + $(this).prev().val();
+	});
+});
+
+</script>
 </head>
 <body>
 	<a href="/BoardProject/insertPage.do">작성하러 가기</a>
@@ -24,10 +34,10 @@
 				<c:forEach items="${list}" var="free">
 					<tr>
 						<td>${free.freeNo}</td>
-						<td>${free.title}</td>
+						<td onclick="location.href='/BoardProject/remove.do'" value="${free.freeNo}">${free.title}</td>
 						<td>${free.writer}</td>
 						<td>${free.hit}</td>
-						<td><name=${free.freeNo}>X</a></td>
+						<td>X</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
