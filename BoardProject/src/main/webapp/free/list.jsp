@@ -8,6 +8,29 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
+	<a href="/BoardProject/insertPage.do">작성하러 가기</a>
+		<hr>
+		<table border = "1">
+			<thead>
+				<tr>
+					<td>게시글번호</td>
+					<td>제목</td>
+					<td>작성자</td>
+					<td>조회수</td>
+					<td>삭제</td>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${list}" var="free">
+					<tr>
+						<td>${free.freeNo}</td>
+						<td>${free.title}</td>
+						<td>${free.writer}</td>
+						<td>${free.hit}</td>
+						<td><name=${free.freeNo}>X</a></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 </body>
 </html>
