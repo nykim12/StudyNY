@@ -8,16 +8,15 @@
 </head>
 <body>
 	<h1>자유게시판 게시글 상세보기화면</h1>
-	<form action="/BoardProject/detail.do" method="post">
-	게시글번호
-	작성자
-	작성IP
-	조회수
+	<form action="/BoardProject/update.do" method="post">
+	게시글번호 ${free.freeNo} <br>
+	작성자 ${free.writer} <br>
+	작성IP ${free.ip} <br>
+	조회수 ${free.hit} <br>
 	제목<input type="text" name="title" id="title"><br>
 		<textarea name="content" id="content" cols="20" rows="2"></textarea><br>
-	
-			<button>수정</button>
-			<input type="button" value="목록" onclick="location.href='/BoardProject/list.do'">
+		<button>수정</button>
+		<input type="button" value="목록" onclick="location.href='/BoardProject/list.do'">
 	</form>
 </body>
 </html>

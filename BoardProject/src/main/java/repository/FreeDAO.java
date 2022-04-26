@@ -29,9 +29,9 @@ public class FreeDAO {
 		return student;
 	}
 
-	public Free selectFreeByTitle(String title) {
+	public Free selectFreeByNo(Long freeNo) {
 		SqlSession ss = factory.openSession();
-		Free free = ss.selectOne("mybatis.mapper.free.selectFreeByTitle", title);
+		Free free = ss.selectOne("mybatis.mapper.free.selectFreeByNo", freeNo);
 		ss.close();
 		return free;
 	}
@@ -64,6 +64,13 @@ public class FreeDAO {
 		}
 		ss.close();
 		return res;
+	}
+	
+	public List<Free> getFreeRank() {
+		SqlSession ss = factory.openSession();
+		List<Free> list = ss.selectList("mybatis.mapper.free.getFreeRank");
+		ss.close();
+		return list;
 	}
 
 }

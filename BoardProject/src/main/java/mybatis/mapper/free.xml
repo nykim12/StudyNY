@@ -11,10 +11,17 @@
 		ORDER BY FREENO
 	</select>
 	
-	<select id="selectFreeByTitle" parameterType="String" resultType="domain.Free">
+	<select id="selectFreeByNo" parameterType="Long" resultType="domain.Free">
 		SELECT FREENO, TITLE, WRITER, CONTENT, IP, HIT
 			FROM FREE
-		WHERE TITLE = #{title}
+		WHERE FREENO = #{freeno}
+	</select>
+	
+	<select id = "getFreeRank" resultType="Long">
+		SELECT F.RANK, F.WRITER, F.TITLE, F.IP, F.HIT, F.CONTENT
+			FROM (SELECT RANK() OVER (ORDER BY HIT DESC) AS RANK, WRITER, TITLE, IP, HIT, CONTENT FROM FREE) F
+		WHERE F.RANK = 1		
+
 	</select>
 	
 	<insert id="insertFree" parameterType="domain.Free">

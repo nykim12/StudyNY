@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import common.ActionForward;
 import service.AddService;
 import service.DeleteService;
+import service.DetailService;
 import service.FreeService;
 import service.ListServive;
+import service.UpdateService;
 
 @WebServlet("*.do")
 public class FreeController extends HttpServlet {
@@ -47,6 +49,12 @@ public class FreeController extends HttpServlet {
 			break;
 		case "remove.do":
 			service = new DeleteService();
+			break;
+		case "detail.do":
+			service = new DetailService();
+			break;
+		case "update.do":
+			service = new UpdateService();
 			break;
 		}
 
