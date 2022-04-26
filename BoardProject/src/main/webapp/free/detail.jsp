@@ -13,8 +13,8 @@
 	작성자 ${free.writer} <br>
 	작성IP ${free.ip} <br>
 	조회수 ${free.hit} <br>
-	제목<input type="text" name="title" id="title"><br>
-		<textarea name="content" id="content" cols="20" rows="2"></textarea><br>
+	제목<input type="text" name="title" id="title" value="${free.title}"><br>
+		<textarea name="content" id="content" cols="20" rows="2" value="${free.content}"></textarea><br>
 		<button>수정</button>
 		<input type="button" value="목록" onclick="location.href='/BoardProject/list.do'">
 	</form>
