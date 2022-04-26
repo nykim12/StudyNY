@@ -23,7 +23,7 @@ public class ProductDAO {
 			System.out.println("Resource name을 찾을 수 없습니다.");
 		}
 	}
-	
+
 	public static ProductDAO getInstance() {
 		return productDAO;
 	}
@@ -90,5 +90,28 @@ public class ProductDAO {
 		return res;
 
 	}
-
+	
+	public ProductDTO selectProductByNo(Long product_no) {
+		ProductDTO product = null;
+		try {
+			con = dataSource.getConnection();
+			sql = "SELECT PRODUCT_NO, NAME, PRICE, IMAGE FROM PRODUCT WHERE PRODUCT_NO = ?";
+			ps = con.prepareStatement(sql);
+			ps.setLong(1, product_no);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				product = ProductDTO.builder()
+						.product_no(rs.getLong("PRODUCT_NO"))
+						.name(rs.getString("NAME"))
+						.price(rs.getInt("PRICE"))
+						.image(rs.getString("IMAGE"))
+						.build();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con,ps, rs);
+		}
+		return product;
+	}
 }

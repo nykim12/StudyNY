@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+		<div>${product.product_no}</div>
+		<div>${product.name}</div>
+		<div>${product.price}</div>
+		<div>${product.image}</div>
 </body>
 </html>

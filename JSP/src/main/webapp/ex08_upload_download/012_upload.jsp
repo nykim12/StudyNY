@@ -48,10 +48,7 @@
 	
 	<div>
 		<img src="../storage/<%=filesystemName%>" width="500px">
-	</div>
-	
-	
-	
+	</div>	
 
 </body>
 </html>

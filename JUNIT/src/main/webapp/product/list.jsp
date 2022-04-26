@@ -29,10 +29,10 @@
 			<c:if test="${not empty list}">
 				<c:forEach items="${list}" var="product">
 					<tr>
-						<td>${list.product_No}</td>
-						<td>${list.name}</td>
-						<td>${list.price}</td>
-						<td><c:if test="${not empty list.image}"></td>
+						<td>${product.product_no}</td>
+						<td>${product.name}</td>
+						<td>${product.price}</td>
+						<td><c:if test="${not empty product.image}"></td>
 								<i class-"fa-solidfa-paperclip"></i>
 							</c:if>
 					</tr>

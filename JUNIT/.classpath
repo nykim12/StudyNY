@@ -12,13 +12,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Installer/commons-dbcp2-2.9.0.jar"/>
-	<classpathentry kind="lib" path="C:/Installer/cos.jar"/>
-	<classpathentry kind="lib" path="C:/Installer/json-20211205.jar"/>
-	<classpathentry kind="lib" path="C:/Installer/mybatis-3.5.9.jar"/>
-	<classpathentry kind="lib" path="C:/Installer/ojdbc6.jar"/>
-	<classpathentry kind="lib" path="C:/Installer/taglibs-standard-impl-1.2.5.jar"/>
-	<classpathentry kind="lib" path="C:/Installer/taglibs-standard-spec-1.2.5.jar"/>
-	<classpathentry kind="lib" path="C:/Installer/lombok-1.18.22.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
