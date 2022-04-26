@@ -5,13 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script>
+	location.href = '/BoardProject/list.do';
+</script>
 </head>
 <body>
-
-		<div>${product.product_no}</div>
-		<div>${product.name}</div>
-		<div>${product.price}</div>
-		<div><img src="${contextPath}/stoarage/${product.image}" alt="${product.image}"></div>
 
 </body>
 </html>

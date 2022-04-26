@@ -12,6 +12,8 @@ public class ProductDetailService implements ProductService {
 
 		Optional<String> opt = Optional.ofNullable(request.getParameter("product_no"));
 		Long product_no = Long.parseLong(opt.orElse("0"));
+		String contextPath = request.getContextPath();
+		request.setAttribute("contextPath", contextPath);
 		request.setAttribute("product", ProductDAO.getInstance().selectProductByNo(product_no));
 
 		return new ActionForward("product/detail.jsp", false);

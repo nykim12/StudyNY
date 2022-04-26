@@ -52,7 +52,7 @@
 		<div>
 			<button>등록</button>
 			<input type="reset" value="다시작성" onclick="reset()">
-			<input type="button" value="목록" onclick="location.href='/JUNIT/list.do'">
+			<input type="button" value="목록" onclick="location.href='/list.do'">
 		</div>
 	</form>
 </body>

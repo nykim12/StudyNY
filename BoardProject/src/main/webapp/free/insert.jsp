@@ -7,11 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-		<div>${product.product_no}</div>
-		<div>${product.name}</div>
-		<div>${product.price}</div>
-		<div><img src="${contextPath}/stoarage/${product.image}" alt="${product.image}"></div>
-
+	
 </body>
 </html>

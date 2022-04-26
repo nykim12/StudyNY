@@ -60,7 +60,7 @@ public class ProductAddService implements ProductService {
 		try {
 			int res = ProductDAO.getInstance().insertProduct(list);
 			if(res > 0) {
-				af = new ActionForward("product/list.do", true);
+				af = new ActionForward("JUNIT/list.do", true);
 			}
 		} catch (SQLIntegrityConstraintViolationException e) {
 			error(file, response, "동일한 제품명이 이미 등록되어 있거나 \\n제품명이 없습니다.");

@@ -32,9 +32,11 @@
 						<td>${product.product_no}</td>
 						<td>${product.name}</td>
 						<td>${product.price}</td>
-						<td><c:if test="${not empty product.image}"></td>
+						<td><c:if test="${not empty product.image}">
+							<a href="/JUNIT/download.do?target=${product.image}}"></a>
 								<i class-"fa-solidfa-paperclip"></i>
 							</c:if>
+						</td>
 					</tr>
 				</c:forEach>
 			</c:if>
