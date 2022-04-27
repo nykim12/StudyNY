@@ -5,24 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 
 public class ProductDAO {
 
-	private static DataSource dataSource;
 	private static ProductDAO productDAO = new ProductDAO();
 
-	private ProductDAO() {
-		try {
-			Context context = new InitialContext();
-			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/xe");
-		} catch (NamingException e) {
-			System.out.println("Resource name을 찾을 수 없습니다.");
-		}
-	}
+	private ProductDAO() {}
 
 	public static ProductDAO getInstance() {
 		return productDAO;
@@ -52,7 +40,7 @@ public class ProductDAO {
 	public List<ProductDTO> selectProductList() {
 		List<ProductDTO> list = new ArrayList<ProductDTO>();
 		try {
-			con = dataSource.getConnection();
+			con = MyConnection.getInstance().getConnection();
 			sql = "SELECT PRODUCT_NO, NAME, PRICE, IMAGE FROM PRODUCT ORDER BY PRODUCT_NO DESC";
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -77,7 +65,7 @@ public class ProductDAO {
 
 		int res = 0;
 
-		con = dataSource.getConnection();
+		con = MyConnection.getInstance().getConnection();
 		sql = "INSERT INTO PRODUCT VALUES (PRODUCT_SEQ.NEXTVAL, ?, ?, ?)";
 		ps = con.prepareStatement(sql);
 		ps.setString(1, product.getName());
@@ -94,7 +82,7 @@ public class ProductDAO {
 	public ProductDTO selectProductByNo(Long product_no) {
 		ProductDTO product = null;
 		try {
-			con = dataSource.getConnection();
+			con = MyConnection.getInstance().getConnection();
 			sql = "SELECT PRODUCT_NO, NAME, PRICE, IMAGE FROM PRODUCT WHERE PRODUCT_NO = ?";
 			ps = con.prepareStatement(sql);
 			ps.setLong(1, product_no);
@@ -120,7 +108,7 @@ public class ProductDAO {
 		int res = 0;
 
 		try {
-			con = dataSource.getConnection();
+			con = MyConnection.getInstance().getConnection();
 			sql = "DELETE FROM PRODUCT WHERE PRODUCT_NO = ?";
 			ps = con.prepareStatement(sql);
 			ps.setLong(1, product_no);
