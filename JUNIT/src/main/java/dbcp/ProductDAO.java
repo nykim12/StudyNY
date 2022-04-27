@@ -60,11 +60,28 @@ public class ProductDAO {
 		}
 		return list;
 	}
+	
+	public int getProductCount() {
+		int res = 0;
+		try {
+			con = MyConnection.getInstance().getConnection();
+			sql = "SELECT COUNT(*) FROM PRODUCT";
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				res = rs.getInt("COUNT(*)");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps, rs);
+		}
+		return res;
+	}
 
 	public int insertProduct(ProductDTO product) throws Exception {
-
 		int res = 0;
-
+		
 		con = MyConnection.getInstance().getConnection();
 		sql = "INSERT INTO PRODUCT VALUES (PRODUCT_SEQ.NEXTVAL, ?, ?, ?)";
 		ps = con.prepareStatement(sql);
@@ -76,7 +93,6 @@ public class ProductDAO {
 		close(con, ps, null);
 
 		return res;
-
 	}
 	
 	public ProductDTO selectProductByNo(Long product_no) {
@@ -104,7 +120,6 @@ public class ProductDAO {
 	}
 	
 	public int deleteProduct(Long product_no) {
-		
 		int res = 0;
 
 		try {
@@ -120,5 +135,7 @@ public class ProductDAO {
 		}
 		return res;
 	}
+
+
 
 }
