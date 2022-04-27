@@ -67,7 +67,7 @@ public class EmpDAO {
 		int res = 0;
 		try {
 			con = dataSource.getConnection(); // Connection 대여
-			sql = "INSERT INTO EMP(EMPNO, NAME, DEPT, HIRED) VALUES (EMP_SEQ.NEXTVAL, ?, ?, SYSDATE)";
+			sql = "INSERT INTO EMPLOYEE(EMPNO, NAME, DEPT, HIRED) VALUES (EMPLOYEE_SEQ.NEXTVAL, ?, ?, SYSDATE)";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, emp.getName());
 			ps.setString(2, emp.getDept());
@@ -87,7 +87,7 @@ public class EmpDAO {
 		List<Emp> list = new ArrayList<Emp>();
 		try {
 			con = dataSource.getConnection();
-			sql = "SELECT EMPNO, NAME, DEPT, HIRED FROM EMP ORDER BY EMPNO DESC";
+			sql = "SELECT EMPNO, NAME, DEPT, HIRED FROM EMPLOYEE ORDER BY EMPNO DESC";
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery(); // SELECT문은 executeQuery() 메소드 실행
 			while (rs.next()) {
@@ -113,7 +113,7 @@ public class EmpDAO {
 		Emp emp = null;
 		try {
 			con = dataSource.getConnection();
-			sql = "SELECT EMPNO, NAME, DEPT, HIRED FROM EMP WHERE EMPNO = ?";
+			sql = "SELECT EMPNO, NAME, DEPT, HIRED FROM EMPLOYEE WHERE EMPNO = ?";
 			ps = con.prepareStatement(sql);
 			ps.setLong(1, empNo);
 			rs = ps.executeQuery();
@@ -137,7 +137,7 @@ public class EmpDAO {
 		int res = 0;
 		try {
 			con = dataSource.getConnection(); // Connection 대여
-			sql = "UPDATE EMP SET NAME = ? , DEPT = ? WHERE EMPNO = ?";
+			sql = "UPDATE EMPLOYEE SET NAME = ? , DEPT = ? WHERE EMPNO = ?";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, emp.getName());
 			ps.setString(2, emp.getDept());
@@ -156,7 +156,7 @@ public class EmpDAO {
 		int res = 0;
 		try {
 			con = dataSource.getConnection(); // Connection 대여
-			sql = "DELETE FROM EMP WHERE EMPNO = ?";
+			sql = "DELETE FROM EMPLOYEE WHERE EMPNO = ?";
 			ps = con.prepareStatement(sql);
 			ps.setLong(1, emp.getEmpNo());
 			res = ps.executeUpdate(); // DML(INSERT, UPDATE, DELETE)은 executeUpdate() 메소드 사용
