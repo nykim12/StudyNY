@@ -16,6 +16,7 @@ public class ProductDownloadService implements ProductService {
 
 		String target = request.getParameter("target");
 		String realPath = request.getServletContext().getRealPath("storage");
+
 		File file = new File(realPath, target);
 
 //		다운로드를 위한 응답 헤더 작업

@@ -114,4 +114,23 @@ public class ProductDAO {
 		}
 		return product;
 	}
+	
+	public int deleteProduct(Long product_no) {
+		
+		int res = 0;
+
+		try {
+			con = dataSource.getConnection();
+			sql = "DELETE FROM PRODUCT WHERE PRODUCT_NO = ?";
+			ps = con.prepareStatement(sql);
+			ps.setLong(1, product_no);
+			res = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps, null);
+		}
+		return res;
+	}
+
 }

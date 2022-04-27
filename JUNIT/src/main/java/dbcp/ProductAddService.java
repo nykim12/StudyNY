@@ -31,14 +31,7 @@ public class ProductAddService implements ProductService {
 		try {
 			mr = new MultipartRequest(request, realPath, 1024 * 1024 * 10, "UTF-8", new DefaultFileRenamePolicy());
 		} catch (IOException e) {
-			try {
-				PrintWriter out = response.getWriter();
-				error(file, response, "파일 첨부가 실패했습니다.");
-				out.flush();
-				out.close();
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
+			error(file, response, "파일 첨부가 실패했습니다.");
 		}
 
 //		DB 저장
@@ -49,7 +42,7 @@ public class ProductAddService implements ProductService {
 		file = mr.getFile("filename");
 		String name = mr.getParameter("name");
 		Integer price = Integer.parseInt(mr.getParameter("price"));
-		String image = mr.getParameter("image");
+		String image = mr.getFilesystemName("filename");
 		ProductDTO list = ProductDTO.builder()
 				.name(name)
 				.price(price)
@@ -60,13 +53,13 @@ public class ProductAddService implements ProductService {
 		try {
 			int res = ProductDAO.getInstance().insertProduct(list);
 			if(res > 0) {
-				af = new ActionForward("JUNIT/list.do", true);
+				af = new ActionForward("/JUNIT/list.do", true);
 			}
-		} catch (SQLIntegrityConstraintViolationException e) {
-			error(file, response, "동일한 제품명이 이미 등록되어 있거나 \\n제품명이 없습니다.");
-		} catch (SQLException e) {
+		} catch(SQLIntegrityConstraintViolationException e) {  // UNIQUE, NOT NULL
+			error(file, response, "동일한 제품명이 이미 등록되어 있거나 \\n필수 정보가 누락되었습니다.");
+		} catch(SQLException e) {  // COLUMN TYPE, SIZE
 			error(file, response, "저장할 수 없는 데이터가 포함되어 있습니다.");
-		} catch (Exception e) {
+		} catch(Exception e) {
 			error(file, response, "알 수 없는 예외가 발생했습니다.");
 		}
 		return af;
@@ -86,7 +79,7 @@ public class ProductAddService implements ProductService {
 			out.flush();
 			out.close();
 		} catch (Exception e) {
-			System.out.println("예외클래스명 " + e.getClass().getName());
+			e.printStackTrace();
 		}
 	}
 }

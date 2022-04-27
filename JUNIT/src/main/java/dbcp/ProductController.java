@@ -29,12 +29,12 @@ public class ProductController extends HttpServlet {
 
 		ActionForward af = null;
 
-		switch (command) {
+		switch(command) {
+		case "addPage.do":
+			af = new ActionForward("product/add.jsp", false);
+			break;
 		case "list.do":
 			service = new ProductListService();
-			break;
-		case "addPage.do":
-			af = new ActionForward("/product/add.jsp", false);
 			break;
 		case "add.do":
 			service = new ProductAddService();
@@ -44,6 +44,9 @@ public class ProductController extends HttpServlet {
 			break;
 		case "download.do":
 			service = new ProductDownloadService();
+			break;
+		case "remove.do":
+			service = new ProductRemoveService();
 			break;
 		}
 
