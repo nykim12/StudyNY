@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis.mapper.student">
+
+	<select id="selectStudentList" resultType="domain.Student">
+		SELECT STU_NO, NAME, KOR, ENG, MAT, AVG, GRADE
+			FROM STUDENT
+		ORDER BY STU_NO DESC
+	</select>
+	
+	<select id="selectStuByNo" parameterType="Long" resultType="domain.Student">
+		SELECT STU_NO, NAME, KOR, ENG, MAT, AVG, GRADE
+			FROM STUDENT
+		WHERE STU_NO = #{stuNo}
+	</select>
+
+	<select id="selectStudentByAvg" parameterType="Map" resultType="domain.Student">
+		SELECT STU_NO, NAME, KOR, ENG, MAT, AVG, GRADE
+		  FROM STUDENT
+		 WHERE <![CDATA[AVG >= #{begin} AND AVG <= #{end}]]>
+	</select>
+	
+	<select id="getSearchCount" parameterType="Map" resultType="Integer">
+		SELECT COUNT(*)
+		  FROM STUDENT
+		 WHERE <![CDATA[AVG >= #{begin} AND AVG <= #{end}]]>
+	</select>
+	
+	<select id="getSearchAverage" parameterType="Map" resultType="Double">
+		SELECT NVL(AVG(AVG), 0)
+		  FROM STUDENT
+		 WHERE <![CDATA[AVG >= #{begin} AND AVG <= #{end}]]>
+	</select>
+	
+	<select id="getTotalCount" resultType="Integer">
+		SELECT COUNT(*) FROM STUDENT
+	</select>
+
+	<select id="getTotalAverage" resultType="Double">
+		SELECT NVL(AVG(AVG), 0)
+		  FROM STUDENT
+	</select>
+	
+	<select id="getStudentRank" resultType="domain.Student">
+		SELECT S.RANK, S.NAME, S.AVG, S.STU_NO
+			FROM (SELECT RANK() OVER (ORDER BY AVG DESC) AS RANK, STU_NO, NAME, AVG FROM STUDENT) S
+		WHERE S.RANK BETWEEN 1 AND 3
+		
+		<!-- SELECT S.RANK, S.NAME, S.AVG
+		  FROM (SELECT RANK() OVER(ORDER BY AVG DESC) AS RANK, NAME, AVG
+		          FROM STUDENT) S
+		 WHERE S.RANK BETWEEN 1 AND 3 -->
+	</select>
+	
+	<insert id="insertStudent" parameterType="domain.Student">
+		INSERT INTO STUDENT(STU_NO, NAME, KOR, ENG, MAT, AVG, GRADE)
+			VALUES (STUDENT_SEQ.NEXTVAL, #{name}, #{kor}, #{eng}, #{mat}, #{avg}, #{grade})
+	</insert>
+	
+	<update id="updateStudent" parameterType="map">
+		UPDATE STUDENT SET NAME = #{name}, KOR = #{kor}, ENG = #{eng}, MAT = #{mat}, AVG = #{avg}, GRADE = #{grade} WHERE STU_NO = #{stuNo}
+	</update>
+	
+	<delete id="deleteStudent" parameterType="Long">
+		DELETE FROM STUDENT WHERE STU_NO = #{stuNo}
+	</delete>
+
+</mapper>
