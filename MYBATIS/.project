@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
 <projectDescription>
 	<name>MYBATIS</name>
 	<comment></comment>
@@ -32,6 +33,5 @@
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
-		<nature>net.harawata.mybatipse.MyBatisNature</nature>
 	</natures>
 </projectDescription>

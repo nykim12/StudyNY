@@ -1,0 +1,9 @@
+<!ELEMENT projectDescription (name,comment,projects,buildSpec,natures)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT comment EMPTY>
+<!ELEMENT projects (#PCDATA)>
+<!ELEMENT buildSpec (buildCommand+)>
+<!ELEMENT buildCommand (name,arguments)>
+<!ELEMENT arguments (#PCDATA)>
+<!ELEMENT natures (nature+)>
+<!ELEMENT nature (#PCDATA)>
