@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="/JUNIT/list.do">상품관리페이지</a>
+	<a href="/JUNIT/list.do">JDBC 상품관리페이지</a>
+	<hr>
+	<a href="/JUNIT/list.prod">MYBATIS 상품관리페이지</a>
 </body>
 </html>

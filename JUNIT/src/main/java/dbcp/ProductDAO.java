@@ -81,17 +81,14 @@ public class ProductDAO {
 
 	public int insertProduct(ProductDTO product) throws Exception {
 		int res = 0;
-		
 		con = MyConnection.getInstance().getConnection();
-		sql = "INSERT INTO PRODUCT VALUES (PRODUCT_SEQ.NEXTVAL, ?, ?, ?)";
+		sql = "INSERT INTO PRODUCT VALUES(PRODUCT_SEQ.NEXTVAL, ?, ?, ?)";
 		ps = con.prepareStatement(sql);
 		ps.setString(1, product.getName());
 		ps.setInt(2, product.getPrice());
 		ps.setString(3, product.getImage());
 		res = ps.executeUpdate();
-
 		close(con, ps, null);
-
 		return res;
 	}
 	

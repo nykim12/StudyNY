@@ -1,25 +1,21 @@
-package dbcp;
+package mybatis;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.ibatis.exceptions.PersistenceException;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-public class ProductAddService implements ProductService {
+public class AddService implements ProductService {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-
-//		파일 업로드
-//		1)	업로드할 디렉터리 경로 알아내기 (서버 내부 realPath)
+		
 		String realPath = request.getServletContext().getRealPath("storage");
 
-//		2)	업로드할 디렉터리가 없을 경우 만들기
 		File dir = new File(realPath);
 		if (dir.exists() == false) {
 			dir.mkdirs();
@@ -27,7 +23,6 @@ public class ProductAddService implements ProductService {
 
 		File file = null;
 		MultipartRequest mr = null;
-
 		try {
 			mr = new MultipartRequest(request, realPath, 1024 * 1024 * 10, "UTF-8", new DefaultFileRenamePolicy());
 		} catch (IOException e) {
@@ -38,29 +33,23 @@ public class ProductAddService implements ProductService {
 		String name = mr.getParameter("name");
 		Integer price = Integer.parseInt(mr.getParameter("price"));
 		String image = mr.getFilesystemName("filename");
-		ProductDTO list = ProductDTO.builder()
+		ProductDTO product = ProductDTO.builder()
 				.name(name)
 				.price(price)
 				.image(image)
 				.build();
-
 		ActionForward af = null;
 		try {
-			int res = ProductDAO.getInstance().insertProduct(list);
-			if(res > 0) {
-				af = new ActionForward("/JUNIT/list.do", true);
+			int res = ProductDAO.getInstance().insertProduct(product);
+			if (res > 0) {
+				af = new ActionForward("/JUNIT/list.prod", true);
 			}
-		} catch(SQLIntegrityConstraintViolationException e) {  // UNIQUE, NOT NULL
-			error(file, response, "동일한 제품명이 이미 등록되어 있거나 \\n필수 정보가 누락되었습니다.");
-		} catch(SQLException e) {  // COLUMN TYPE, SIZE
-			error(file, response, "저장할 수 없는 데이터가 포함되어 있습니다.");
-		} catch(Exception e) {
-			error(file, response, "알 수 없는 예외가 발생했습니다.");
+		} catch (PersistenceException e) { // UNIQUE, NOT NULL, COLUMN TYPE, SIZE 등 DB 오류
+			error(file, response, "데이터베이스 오류");
 		}
-		return af;
+		return af;	
 	}
 
-//	예외 처리(예외에 따른 응답 만들기)
 	public void error(File file, HttpServletResponse response, String msg) {
 		if (file != null && file.exists()) {
 			file.delete();
@@ -69,7 +58,7 @@ public class ProductAddService implements ProductService {
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('" + msg + "')");
-			out.println("history.back();");
+			out.println("history.back()");
 			out.println("</script>");
 			out.flush();
 			out.close();

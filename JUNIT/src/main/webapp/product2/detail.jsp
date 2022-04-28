@@ -8,14 +8,14 @@
 </head>
 <body>
 
-		<form action="/JUNIT/remove.do">
-			<input type="hidden" name="productNo"  value="${product.product_no}">
+		<form action="/JUNIT/remove.prod">
+			<input type="hidden" name="productNo"  value="${product.productNo}">
 			<button>삭제</button>
 		</form>
 		
 		<hr>
 
-		<div>${product.product_no}</div>
+		<div>${product.productNo}</div>
 		<div>${product.name}</div>
 		<div>${product.price}</div>
 		<div><img src="${contextPath}/storage/${product.image}" alt="${product.image}"></div>
