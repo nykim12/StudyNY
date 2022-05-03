@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import common.ActionForward;
 import service.AddService;
+import service.DetailService;
 import service.ListService;
 import service.MemberService;
 
@@ -42,6 +43,9 @@ public class MemberController extends HttpServlet {
 			break;
 		case "list.do":	//	http://localhost:9090/AJAX/list.do
 			service = new ListService();
+			break;
+		case "detail.do":
+			service = new DetailService();
 			break;
 		}
 

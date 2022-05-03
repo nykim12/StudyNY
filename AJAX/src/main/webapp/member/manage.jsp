@@ -22,8 +22,7 @@
 		fnRemove();
 		fnInit();
 	})
-	
-	// 함수
+
 	function fnList(){
 		$.ajax({
 			url: '/AJAX/list.do',
@@ -48,8 +47,26 @@
 	}
 
 	function fnDetail(){
-		// 조회 버튼을 클릭하면 실행
-		
+		//	조회 버튼은 (dynamic element)이므로, 부모를 기반으로 이벤트를 등록시킨다.
+		$('body').on('click', '.btnDetail', function(){
+			var no = $(this).data('no');	//	var no = $(this).data('no');
+			$.ajax({
+				url: '/AJAX/detail.do',
+				data: 'no='+no,
+				type: 'GET',
+				dataType: 'json',
+				success: function(responseText){
+					if(responseText.result == true){
+						$('#id').val(responseText.member.id).prop('readOnly', true);
+						$('#name').val(responseText.member.name);
+						$(':radio[name="gender"][value="' + responseText.member.gender + '"]').prop('checked',true);
+						$('#address').val(responseText.member.address);
+					} else {
+						alert('조회된 회원 정보가 없습니다.');
+					}
+				}
+			})
+		})
 	}
 
 	function fnAdd(){
@@ -74,7 +91,8 @@
 			$.ajax({
 				url:'/AJAX/add.do',
 				type: 'POST',
-				data: 'id=' + $('#id').val() + '&name=' + $('#name').val() + '&gender=' + $(':radio[name="gender"]:checked').val() + '&address=' + $('#address').val(),
+				data: $('#formMember').serialize(),
+//				data: 'id=' + $('#id').val() + '&name=' + $('#name').val() + '&gender=' + $(':radio[name="gender"]:checked').val() + '&address=' + $('#address').val(),
 				dataType: 'json',
 				success: function(responseText){
 					if(responseText.res==1){
@@ -104,7 +122,7 @@
 	}
 	function fnInit(){
 		$('#btnInit').on('click', function(){
-			$('#id').val('');
+			$('#id').val('').prop('readOnly', false);
 			$('#name').val('');
 			$(':radio[name="gender"]').prop('checked', false);
 			$('#address').val('');
