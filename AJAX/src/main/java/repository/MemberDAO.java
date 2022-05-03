@@ -45,7 +45,7 @@ public class MemberDAO {
 	
 	public MemberDTO selectMemberListByNo(Long no) {
 		SqlSession ss = factory.openSession();
-		MemberDTO member = ss.selectOne("mybatis.mapper.member.selectMemberListByNo");
+		MemberDTO member = ss.selectOne("mybatis.mapper.member.selectMemberListByNo", no);
 		ss.close();
 		return member;
 	}
