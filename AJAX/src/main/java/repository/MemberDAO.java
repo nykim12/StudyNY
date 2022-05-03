@@ -60,5 +60,23 @@ public class MemberDAO {
 		return res;
 	}
 	
+	public int modifyMember(MemberDTO member) {
+		SqlSession ss = factory.openSession();
+		int res = ss.update("mybatis.mapper.member.updateMember", member);
+		if (res > 0) {
+			ss.commit();
+		}
+		ss.close();
+		return res;
+	}
 	
+	public int deleteMember(Long no) {
+		SqlSession ss = factory.openSession();
+		int res = ss.delete("mybatis.mapper.member.deleteMember", no);
+		if (res > 0) {
+			ss.commit();
+		}
+		ss.close();
+		return res;
+	}	
 }

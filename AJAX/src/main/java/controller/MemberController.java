@@ -9,9 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import common.ActionForward;
 import service.AddService;
+import service.DeleteService;
 import service.DetailService;
 import service.ListService;
 import service.MemberService;
+import service.ModifyService;
 
 @WebServlet("*.do")
 public class MemberController extends HttpServlet {
@@ -46,6 +48,12 @@ public class MemberController extends HttpServlet {
 			break;
 		case "detail.do":
 			service = new DetailService();
+			break;
+		case "modify.do":
+			service = new ModifyService();
+			break;
+		case "delete.do":
+			service = new DeleteService();
 			break;
 		}
 

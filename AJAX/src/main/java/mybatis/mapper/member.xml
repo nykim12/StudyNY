@@ -22,8 +22,8 @@
 		VALUES (MEMBER_SEQ.NEXTVAL, #{id}, #{name}, #{gender}, #{address})
 </insert>
 
-<update id="updateMember" parameterType="Long">
-	UPDATE MEMBER SET NAME=#{name}, GENDER=#{gender}, ADDRESS=#{address} WHERE NO = #{no}
+<update id="updateMember" parameterType="domain.MemberDTO">
+	UPDATE MEMBER SET NAME=#{name}, GENDER=#{gender}, ADDRESS=#{address} WHERE ID=#{id}
 </update>
 
 <delete id="deleteMember" parameterType="Long">
