@@ -50,4 +50,15 @@ public class EngineerCalculator {
 		this.calculator = calculator;
 	}
 
+	public EngineerCalculator(int a, int b, Calculator calculator) {
+		super();
+		this.a = a;
+		this.b = b;
+		this.calculator = calculator;
+	}
+	
+	public EngineerCalculator() {
+		
+	}
+
 }

@@ -15,7 +15,7 @@
 			: setter injection (세터 주입)
 	-->
 
-	<!-- 
+	<!--
 		1)	디폴트 생성자
 			<bean class="클래스명" id="객체(인스턴스)명></bean>
 			<bean class="클래스명" id="객체(인스턴스)명"/>
@@ -43,10 +43,56 @@
 	 	<property name="calculator">	<!-- private Calculator calculator; setter를 이용하여 동작 -->
 	 		<ref bean="calculator1"></ref>
 	 	</property>
-	 </bean>	 
+	 </bean>
+
+	<!--
+		scope = "singleton" : 디폴트, 객체를 하나만 만들어 둔다.
+		scope = "prototype" : 객체를 요청할 때마다 새로 만들어서 준다.
+	-->
+	<bean class="com.goodee.ex01.xml01.Calculator" id="calculator2" scope="prototype"/>
+	<bean class="com.goodee.ex01.xml01.EngineerCalculator" id="eCalculator2">
+		 <property name="a" value="13"/>
+		 <property name="b" value="5"/>
+		 <property name="calculator" ref="calculator2"/>
+	</bean>
 
 	<!-- 2.	필드를 이용한 생성자(AllArgsConstructor)
 			: constructor injection(생성자 주입)
 	-->
-
+	<!-- 
+		<bean class="클래스명" id="객체(인스턴스)명">
+			<constructor-arg>
+				<value>1번째 인수값</value>
+			</constructor-arg>
+			<constructor-arg>
+				<value>2번째 인수값</value>
+			</constructor-arg>
+			<constructor-arg>
+				<ref bean="3번째 인수값(객체명)" />
+			</constructor-arg>
+		</bean>
+	-->
+	<!--
+		Calculator calculator3 = new Calculator();
+		EngineerCalculator eCalculator3 = new EngineerCalculator(8, 5, calculator3);
+	-->
+	<bean class="com.goodee.ex01.xml01.Calculator" id="calculator3"/>
+	<bean class="com.goodee.ex01.xml01.EngineerCalculator" id="eCalculator3">
+		<constructor-arg>
+			<value>8</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value>5</value>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="calculator3"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean class="com.goodee.ex01.xml01.Calculator" id="calculator4"/>
+	<bean class="com.goodee.ex01.xml01.EngineerCalculator" id="eCalculator4">
+		<constructor-arg value="25"/>
+		<constructor-arg value="12"/>
+		<constructor-arg ref="calculator4"/>
+	</bean>
 </beans>
