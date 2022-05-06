@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<!-- 1.	디폴트 생성자(NoArgsConstructor) + setter
+			: setter injection (세터 주입) -->
+	
+	<!-- 
+		1)	디폴트 생성자
+			<bean class="클래스명" id="객체(인스턴스)명></bean>
+			<bean class="클래스명" id="객체(인스턴스)명"/>
+
+		2)	setter
+			<property name="필드명">
+				<value>값</value>	primary type : value 태그
+			</property>
+			<property name="필드명">
+				<ref bean="객체명"/>	reference type : ref 태그의 bean 속성
+			</property>
+	 -->
+	 
+	 <!-- 
+	 	디폴트 생성자 연습
+	 	Calculator calculator1 = new Calculator();
+	 -->
+	 <bean class="com.goodee.ex01.xml01.Calculator" id="calculator1"></bean>
+
+	<!-- 2.	필드를 이용한 생성자(AllArgsConstructor)
+			: constructor injection(생성자 주입)
+	-->
+</beans>
