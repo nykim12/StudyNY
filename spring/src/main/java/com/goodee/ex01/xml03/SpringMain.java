@@ -11,7 +11,7 @@ public class SpringMain {
 
 		AbstractApplicationContext ctx = new GenericXmlApplicationContext("xml/context03.xml");
 
-		MyConnection conn = ctx.getBean("oracleConnection", MyConnection.class);
+		MyConnection conn = ctx.getBean("oracleConnection2", MyConnection.class);
 		Connection con = conn.getConnection();
 
 		if (con != null) {
