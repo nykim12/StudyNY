@@ -29,6 +29,7 @@
 		${webAppRoot}/resources
 	-->
 	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/assets/**" location="/assets/" />	<!-- 추가 가능 -->
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<!--
