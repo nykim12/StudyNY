@@ -1,2 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.goodee.ex02.xml02.Calculator"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.xml01.Parents"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.xml01.EngineerCalculator"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.xml01.Calculator"/>
+    <fullyQualifiedTypeName name="java.sql.DriverManager"/>
+    <fullyQualifiedTypeName name="java.sql.Connection"/>
+    <fullyQualifiedTypeName name="java.lang.Exception"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.xml03.MyConnection"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.xml04.CollectionClass"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.xml06.GymMember"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.xml06.Calculator"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.xml06.BMICalculator"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.java01.Song"/>
+    <fullyQualifiedTypeName name="javax.swing.Spring"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.java01.Singer"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.java01.SpringBeanConfig"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.Random"/>
+    <fullyQualifiedTypeName name="java.lang.Math"/>
+    <fullyQualifiedTypeName name="java.util.Set"/>
+    <fullyQualifiedTypeName name="java.util.HashSet"/>
+    <fullyQualifiedTypeName name="org.springframework.context.support.GenericApplicationContext"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.java02.SpringBeanConfig"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.java02.Student"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.java03.Gugudan"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.java03.SpringBeanConfig"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.java04.Publisher"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.java05.Soldier"/>
+    <fullyQualifiedTypeName name="org.springframework.context.support.GenericXmlApplicationContext"/>
+    <fullyQualifiedTypeName name="java.util.Map.Entry"/>
+    <fullyQualifiedTypeName name="org.springframework.context.annotation.Configuration"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.java06.BankAccount"/>
+    <fullyQualifiedTypeName name="org.springframework.context.annotation.Bean"/>
+    <fullyQualifiedTypeName name="java.util.Map"/>
+    <fullyQualifiedTypeName name="java.util.HashMap"/>
+    <fullyQualifiedTypeName name="org.springframework.context.annotation.ImportResource"/>
+    <fullyQualifiedTypeName name="org.springframework.context.support.AbstractApplicationContext"/>
+    <fullyQualifiedTypeName name="org.springframework.context.annotation.AnnotationConfigApplicationContext"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.java06.SpringBeanConfig"/>
+    <fullyQualifiedTypeName name="com.goodee.ex01.java06.Customer"/>
+</qualifiedTypeNameHistroy>

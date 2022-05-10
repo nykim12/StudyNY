@@ -1,5 +1,6 @@
-commentText=\#a1a1a1 | null | false | false | false | false
+commentText=\#b3b3b3 | null | false | false | false | false
 eclipse.preferences.version=1
-entityReference=\#e35587 | null | false | false | false | false
+newFileTemplateName=xml declaration
 org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart.lastActivePage=1
 tagAttributeValue=\#17c694 | null | false | false | false | false
+tagBorder=\#9e9e9e | null | false | false | false | false
