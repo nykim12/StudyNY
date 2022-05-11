@@ -3,31 +3,22 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.goodee</groupId>
-	<artifactId>ex01</artifactId>
-	<name>BEAN</name>
+	<artifactId>ex03</artifactId>
+	<name>MVC_DI</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
-
-	<!-- pom.xml의 수정된 내용을 반영하려면 [Maven] - [Update Project] -->
-
-	<!-- properties : 각종 version을 세팅하는 곳, release된 날짜를 보고 맞추는 게 좋음 -->
-	<!-- spring이 기준 version이고 다른 것들은 spring과 같은 날짜 또는 이전에 배포된 날짜로 방식을 사용 -->
-	
 	<properties>
 		<java-version>11</java-version>
 		<org.springframework-version>5.3.3</org.springframework-version>
 		<org.aspectj-version>1.9.6</org.aspectj-version>
 		<org.slf4j-version>1.7.30</org.slf4j-version>
 	</properties>
-	
-	
-	<!-- jar : dependencies -->
 
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>					<!-- <org.springframework-version>5.3.3</org.springframework-version> -->
+			<artifactId>spring-context</artifactId>
 			<version>${org.springframework-version}</version>
 			<exclusions>
 				<!-- Exclude Commons Logging in favor of SLF4j -->
@@ -101,13 +92,14 @@
 		</dependency>
 				
 		<!-- Servlet -->
-		<!-- artifactId와 version을 최선 버전으로 수정해야 함 -->
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api/4.0.1 -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
@@ -121,13 +113,13 @@
 		</dependency>
 	
 		<!-- Test -->
-		<!-- JUnit4는 version만 변경, JUnit5는 groupId, artifacID도 변경해야 함 -->
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.7</version>
-			<scope>test</scope>
-		</dependency>        
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <version>4.13.1</version>
+		    <scope>test</scope>
+		</dependency>
 	</dependencies>
 
     <build>
@@ -146,6 +138,7 @@
                     <downloadJavadocs>true</downloadJavadocs>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -158,8 +151,8 @@
                     <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
-            
-			<plugin>
+
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.2.1</version>
@@ -167,6 +160,7 @@
                     <mainClass>org.test.int1.Main</mainClass>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 </project>

@@ -7,17 +7,27 @@
 	<name>BEAN</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
+
+	<!-- pom.xml의 수정된 내용을 반영하려면 [Maven] - [Update Project] -->
+
+	<!-- properties : 각종 version을 세팅하는 곳, release된 날짜를 보고 맞추는 게 좋음 -->
+	<!-- spring이 기준 version이고 다른 것들은 spring과 같은 날짜 또는 이전에 배포된 날짜로 방식을 사용 -->
+	
 	<properties>
-		<java-version>1.6</java-version>
-		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
-		<org.aspectj-version>1.6.10</org.aspectj-version>
-		<org.slf4j-version>1.6.6</org.slf4j-version>
+		<java-version>11</java-version>
+		<org.springframework-version>5.3.3</org.springframework-version>
+		<org.aspectj-version>1.9.6</org.aspectj-version>
+		<org.slf4j-version>1.7.30</org.slf4j-version>
 	</properties>
+	
+	
+	<!-- jar : dependencies -->
+
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
+			<artifactId>spring-context</artifactId>					<!-- <org.springframework-version>5.3.3</org.springframework-version> -->
 			<version>${org.springframework-version}</version>
 			<exclusions>
 				<!-- Exclude Commons Logging in favor of SLF4j -->
@@ -91,6 +101,7 @@
 		</dependency>
 				
 		<!-- Servlet -->
+		<!-- artifactId와 version을 최선 버전으로 수정해야 함 -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -110,6 +121,7 @@
 		</dependency>
 	
 		<!-- Test -->
+		<!-- JUnit4는 version만 변경, JUnit5는 groupId, artifacID도 변경해야 함 -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -117,6 +129,7 @@
 			<scope>test</scope>
 		</dependency>        
 	</dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -138,14 +151,15 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.5.1</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>${java-version}</source>
+                    <target>${java-version}</target>
                     <compilerArgument>-Xlint:all</compilerArgument>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
-            <plugin>
+            
+			<plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.2.1</version>
