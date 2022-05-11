@@ -15,5 +15,6 @@
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 	<a href="${contextPath}/board/detail">게시판 상세보기</a>
+	<a href="${contextPath}/member/detail">회원 상세보기</a>
 </body>
 </html>
