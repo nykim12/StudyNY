@@ -48,5 +48,12 @@
 			f.submit();
 		}
 	</script>
+	
+	<!-- RedirectController에 요청하기, redirect 방법 -->
+	<a href="${contextPath}/list1?page=1">목록보기1</a><hr>
+	<a href="${contextPath}/list3?page=1">목록보기2</a><hr>
+
+	<!-- RedirectController에 요청하기, redirect -->
+	
 </body>
 </html>

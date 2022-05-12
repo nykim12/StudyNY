@@ -8,8 +8,7 @@
 </head>
 <body>
 
-	<h1>모델명 : ${product.model}</h1>
-	<h1>가격 : ${product.price}원</h1>
+	<h2>현재 ${page} 페이지를 보고 있습니다.</h2>
 
 </body>
 </html>
