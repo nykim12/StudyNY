@@ -23,7 +23,6 @@ public class BoardController {
 	}
 
 /*
-
 	1.	필드 주입 (@Autowired)
 		필드마다 @Autowired 추가해야 함 (필드가 10개이면 @Autowired도 10개 추가)
 		필드가 많은 경우 사용하지 않는 것이 좋음
@@ -59,7 +58,7 @@ public class BoardController {
 
 /*
 	DI(Dependency Injection) : 의존성 주입
-		
+
 	1.	스프링 컨테이너에 있는 bean을 스프링이 주입하는 방법
 	2.	방법
 		1)	필드에 직접 주입
