@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.goodee.ex04.domain.Member;
 
 @Controller
-public class RequestController {
+public class ForwardController_Study {
 
 	@GetMapping("/")		// http://localhost:9090/ex04 이 주소로 연결되면,
 	public String index() {
