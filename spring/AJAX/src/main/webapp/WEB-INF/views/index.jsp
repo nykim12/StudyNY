@@ -10,7 +10,8 @@
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-	<a href="${contextPath}/member">회원관리</a>
-	<a href="${contextPath}/board">게시판</a>
+	<a href="${contextPath}/member">회원관리</a><br>
+	<a href="${contextPath}/board">게시판</a><br>
+	<a href="${contextPath}/product">제품관리</a>
 </body>
 </html>

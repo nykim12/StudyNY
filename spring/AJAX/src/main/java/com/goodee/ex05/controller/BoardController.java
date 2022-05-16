@@ -20,11 +20,6 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
-	
-	@GetMapping("board")
-	public String board() {
-		return "board";
-	}
 
 	@GetMapping(value = "board/detail1", produces = "application/json; charset=UTF-8")
 	@ResponseBody

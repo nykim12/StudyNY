@@ -33,16 +33,6 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
-	@GetMapping("/")
-	public String index() {
-		return "index";
-	}
-
-	@GetMapping("member")
-	public String member() {
-		return "member";
-	}
-
 //	Controller의 메소드는 기본적으로 JSP 이름을 반환
 //	AJAX는 JSP 이름을 반환하는 것이 아니라, 자신을 호출한 JSP로 값을 반환하는 구조
 
