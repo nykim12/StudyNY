@@ -1,0 +1,10 @@
+※ MVC
+
+1.	목록 보기
+	1) JSP			${contextPath}/board/list 요청
+	2) Controller	@GetMapping(board/list)
+					boardService.findBoards() 호출
+	3) Service		findBoards() 메소드
+					boardRepository.selectBoards() 호출
+	4) Repository	selectBoards() 메소드
+					SELECT * FROM BOARD 실행
