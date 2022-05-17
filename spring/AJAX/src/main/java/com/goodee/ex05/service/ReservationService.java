@@ -12,4 +12,5 @@ public interface ReservationService {
 
 	public ResponseEntity<ReservationDTO> detail3(ReservationDTO reservation);
 
+	public ResponseEntity<byte[]> image();
 }

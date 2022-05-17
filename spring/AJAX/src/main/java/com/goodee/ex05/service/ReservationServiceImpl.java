@@ -1,12 +1,16 @@
 package com.goodee.ex05.service;
 
+import java.io.File;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
+
 import com.goodee.ex05.domain.ReservationDTO;
 
 public class ReservationServiceImpl implements ReservationService {
@@ -58,7 +62,38 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public ResponseEntity<ReservationDTO> detail3(ReservationDTO reservation) {
-		return null;
+
+		HttpHeaders header = new HttpHeaders();
+		header.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+
+		ResponseEntity<ReservationDTO> result = null;
+
+		if(reservation.getNo() > 100) {
+			result = new ResponseEntity<>(null, null, HttpStatus.INTERNAL_SERVER_ERROR);  // status : 500
+		} else {
+			result = new ResponseEntity<>(new ReservationDTO(reservation.getNo(), "예약자"), header, HttpStatus.OK);
+		}
+
+		return result;
+	}
+
+	@Override
+	public ResponseEntity<byte[]> image() {
+		File file = new File("C:\\Users\\GDJ45\\Desktop", "pika.png"); // new File("C:\\pika.png")
+		ResponseEntity<byte[]> result = null;
+		try {
+//			C:\\pika.png 파일을 복사해서 byte[] 배열에 저장하고 해당 byte[] 배열 반환
+			byte[] b = FileCopyUtils.copyToByteArray(file);
+//			HttpHeaders : 반환할 데이터의 Content-Type
+//			jpg 이미지의 Content-Type은 image/jpg
+			HttpHeaders header = new HttpHeaders();
+			header.add("Content-Type", "image/jpg");
+//			반환할 ResponseEntity
+			result = new ResponseEntity<>(b, header, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }
