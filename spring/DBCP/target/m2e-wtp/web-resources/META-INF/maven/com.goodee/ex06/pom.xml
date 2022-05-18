@@ -31,7 +31,14 @@
 			<artifactId>ojdbc6</artifactId>
 			<version>12.1.0.1</version>
 		</dependency>
-		
+
+		<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-dbcp -->
+		<dependency>
+		    <groupId>org.apache.tomcat</groupId>
+		    <artifactId>tomcat-dbcp</artifactId>
+		    <version>9.0.62</version>
+		</dependency>
+	
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
