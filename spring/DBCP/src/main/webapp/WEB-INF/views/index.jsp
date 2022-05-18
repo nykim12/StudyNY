@@ -6,7 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="resources/js/jquery-3.6.0.js"></script>
+<script src="../resources/js/jquery-3.6.0.js"></script>
+<script>
+	$(document).ready(()=>{
+		$('#btnRemove').on('click', ()=>{
+			if(confirm('삭제할까요?')){
+				location.href='${contextPath}/board/remove?board_no=${board_no}'
+			}
+		})
+	})
+</script>
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
