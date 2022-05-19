@@ -1,15 +1,11 @@
 package com.goodee.ex06.repository;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 
 import com.goodee.ex06.domain.BoardDTO;
 
@@ -19,9 +15,6 @@ public class BoardRepository {
 //	singleton 처리 필요 X
 //	BoardConfig.java에 bean으로 등록해 두면 스프리잉 singleton으로 만듦
 
-//	DBCP 관리는 DataSource가 함
-	private DataSource dataSource;
-
 	private Connection con;
 	private PreparedStatement ps;
 	private ResultSet rs;
@@ -30,16 +23,15 @@ public class BoardRepository {
 //	BoardConfig.java를 통해 bean이 생성되는 순간 new BoardRepository()가 호출됨
 //	외부에서 호출할 수 있도록 접근 궈한은 public으로 처리하고, context.xml을 읽어 dataSource 생성
 
-	public BoardRepository() {
-
-//		JNDI 방식으로 context.xml에 등록한 Resource의 이름(Name)
+	public Connection getConnection() {
+		Connection conn = null;
 		try {
-			Context context = new InitialContext();
-			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/oracle");
-		} catch (NamingException e) {
-			e.printStackTrace(); // Resource를 찾을 수 없음
+			Class.forName("oracle.jdbc.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "SCOTT", "1111");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
+		return conn;
 	}
 
 	public void close(Connection con, PreparedStatement ps, ResultSet rs) {
@@ -64,7 +56,7 @@ public class BoardRepository {
 	public List<BoardDTO> selectBoards() {
 		List<BoardDTO> list = new ArrayList<BoardDTO>();
 		try {
-			con = dataSource.getConnection();
+			con = getConnection();
 			sql = "SELECT BOARD_NO, TITLE, CONTENT, WRITER, CREATED, LASTMODIFIED FROM BOARD ORDER BY BOARD_NO DESC";
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -89,7 +81,7 @@ public class BoardRepository {
 	public BoardDTO selectBoardByNo(long board_no) {
 		BoardDTO board = null;
 		try {
-			con = dataSource.getConnection();
+			con = getConnection();
 			sql = "SELECT BOARD_NO, TITLE, CONTENT, WRITER, CREATED, LASTMODIFIED FROM BOARD WHERE BOARD_NO = ?";
 			ps = con.prepareStatement(sql);
 			ps.setLong(1, board_no);
@@ -113,7 +105,7 @@ public class BoardRepository {
 	public int insertBoard(BoardDTO board) {
 		int res = 0;
 		try {
-			con = dataSource.getConnection();
+			con = getConnection();
 			sql = "INSERT INTO BOARD VALUES (BOARD_SEQ.NEXTVAL, ?, ?, ?, TO_CHAR(SYSDATE,'YYYY-MM-DD'), TO_CHAR(SYSDATE,'YYYY-MM-DD'))";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, board.getTitle());
@@ -131,12 +123,13 @@ public class BoardRepository {
 	public int updateBoard(BoardDTO board) {
 		int res = 0;
 		try {
-			con = dataSource.getConnection();
+			con = getConnection();
 			sql = "UPDATE BOARD SET TITLE = ?, CONTENT = ? WHERE BOARD_NO = ?";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, board.getTitle());
 			ps.setString(2, board.getContent());
 			ps.setLong(3, board.getBoard_no());
+			res = ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -148,7 +141,7 @@ public class BoardRepository {
 	public int deleteBoard(long board_no) {
 		int res = 0;
 		try {
-			con = dataSource.getConnection();
+			con = getConnection();
 			sql = "DELETE FROM BOARD WHERE BOARD_NO = ?";
 			ps = con.prepareStatement(sql);
 			ps.setLong(1, board_no);

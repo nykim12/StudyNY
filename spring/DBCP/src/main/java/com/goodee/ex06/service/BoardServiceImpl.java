@@ -1,11 +1,8 @@
 package com.goodee.ex06.service;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,6 +19,17 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardRepository boardRepository;
 
+	public Connection getConnection() {
+		Connection con = null;
+		try {
+			Class.forName("oracle.jdbc.driver");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "SCOTT", "1111");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return con;
+	}
+
 	@Override
 	public List<BoardDTO> findBoards() {
 
@@ -37,79 +45,24 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void save(BoardDTO board, HttpServletRequest request, HttpServletResponse response) {
+	public void save(BoardDTO board) {
 
-		int res = boardRepository.insertBoard(board);
-		try {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			if (res > 0) {
-				out.println("<script>");
-				out.println("alert('등록 완료되었습니다.')");
-				out.println("location.href='" + request.getContextPath() + "/board/list'");
-				out.println("</script>");
-				out.close();
-			} else {
-				out.println("<script>");
-				out.println("alert('등록 실패되었습니다.')");
-				out.println("history.back()");
-				out.println("</script>");
-				out.close();
-			}
-
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
+		boardRepository.insertBoard(board);
+		
 
 	}
 
 	@Override
-	public void modify(BoardDTO board, HttpServletRequest request, HttpServletResponse response) {
-		int res = boardRepository.updateBoard(board);
-		try {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			if (res > 0) {
-				out.println("<script>");
-				out.println("alert('수정되었습니다.')");
-				out.println("location.href='" + request.getContextPath() + "/board/list'");
-				out.println("</script>");
-				out.close();
-			} else {
-				out.println("<script>");
-				out.println("alert('수정되지 않았습니다.')");
-				out.println("history.back()");
-				out.println("</script>");
-				out.close();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void modify(BoardDTO board) {
+		boardRepository.updateBoard(board);
+		
 	}
 
 	@Override
-	public void remove(long board_no, HttpServletRequest request, HttpServletResponse response) {
+	public void remove(long board_no) {
 
-		int res = boardRepository.deleteBoard(board_no);
-		try {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			if (res > 0) {
-				out.println("<script>");
-				out.println("alert('삭제 완료되었습니다.')");
-				out.println("location.href='" + request.getContextPath() + "/board/list'");
-				out.println("</script>");
-				out.close();
-			} else {
-				out.println("<script>");
-				out.println("alert('삭제 실패되었습니다.')");
-				out.println("history.back()");
-				out.println("</script>");
-				out.close();
-			}
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
+		boardRepository.deleteBoard(board_no);
+		
 
 	}
 

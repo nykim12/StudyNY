@@ -8,12 +8,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.goodee.ex06.config.BoardConfig;
 import com.goodee.ex06.domain.BoardDTO;
 import com.goodee.ex06.repository.BoardRepository;
 
-@RunWith(MySpringJUnit4ClassRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { BoardConfig.class })
 //	context.xml에 bean을 생성했을 경우 아래와 같이 작성
 //	@ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
@@ -27,7 +28,7 @@ public class BoardTestCase {
 	@Test
 	public void 목록테스트() {
 		List<BoardDTO> boards = boardRepository.selectBoards();
-		assertEquals(0, boards.size());
+		assertEquals(2, boards.size());
 	}
 
 }
