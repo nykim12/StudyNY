@@ -11,25 +11,26 @@
 <script>
 
 	$(document).ready(function(){
-		$('#f').on('submit', functon(ev){
+
+		$('#f').on('submit', function(event){
 
 			if($('#title').val() == '' || $('#author').val() == ''){
 				alert('제목과 저자는 필수입니다.');
-				event.preventDefault();	//	== return;
+				event.preventDefault();  // return;
 			}
 
-			var regPubDate = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/
-			if(regPubDate.test($('#pubDate').val()) == false){
-				alert('출판일은 YYYY-MM-DD 형식으로 입력해주세요.');
+			var regPubDate = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+			if( regPubDate.test($('#pubDate').val()) == false ) {
+				alert('출판일은 YYYY-MM-DD 형식으로 입력해야 합니다.');
 				event.preventDefault();
 			}
 
 		})
 
-		$('#btnList').on('click', function(ev){
-			location.href = '${contextPath}/book/list';
+		$('#btnList').on('click', function(event){
+			location.href='${contextPath}/book/list';
 		})
-
+		
 	})
 
 </script>

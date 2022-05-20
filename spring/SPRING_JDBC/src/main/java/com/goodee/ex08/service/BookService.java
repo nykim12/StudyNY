@@ -16,4 +16,6 @@ public interface BookService {
 
 	public int remove(long book_no);
 
+	public void transaction();
+
 }

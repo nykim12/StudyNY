@@ -13,8 +13,7 @@
 		<org.aspectj-version>1.9.6</org.aspectj-version>
 		<org.slf4j-version>1.7.30</org.slf4j-version>
 	</properties>
-
-	<!-- ojdbc6.jar 라이브러리를 다운로드받을 수 있는 레파지토리 등록 -->
+<!-- ojdbc6.jar 라이브러리를 다운로드받을 수 있는 레파지토리 등록 -->
 	<repositories>
 		<repository>
 			<id>oracle</id>
@@ -24,12 +23,13 @@
 	</repositories>
 
 	<dependencies>
-		<!-- ojdbc6 -->
+	<!-- ojdbc6 -->
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
 			<version>12.1.0.1</version>
 		</dependency>
+	
 	
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
 		<dependency>
@@ -78,12 +78,6 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		<!-- AspectJ -->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>${org.aspectj-version}</version>
-		</dependency>	
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -95,6 +89,16 @@
 			<artifactId>jcl-over-slf4j</artifactId>
 			<version>${org.slf4j-version}</version>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

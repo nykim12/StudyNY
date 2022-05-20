@@ -1,40 +1,43 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="../resources/js/jquery-3.6.0.js"></script>
-<script>
+<script type="text/javascript">
 	$(document).ready(function(){
+
 		$('.book_title').on('click', function(){
-			location.href='${contextPath}/book/detail?book_no=' + $(this).data('book_no');	//	data-book_no ¼Ó¼º °ª
+			location.href='${contextPath}/book/detail?book_no=' + $(this).data('book_no');	//	data-book_no ì†ì„± ê°’
 //			location.href='${contextPath}/book/detail?book_no=' + $(this).prev().text();	//	<td>${book.book_no}</td>
 		})
-	})
-	
-	$('#btnSave').on('click', function(){
-		location.href='${contextPath}/book/savePage';
+
+		$('#btnSave').on('click', function(){
+			location.href='${contextPath}/book/savePage';
+			console.log('############')
+		})
+
 	})
 	
 </script>
 </head>
 <body>
 
-	<input type="button" value="µî·Ï" id="btnSave">
+	<input type="button" value="ë“±ë¡" id="btnSave">
 
 	<hr>
 
 	<table border="1">
 		<thead>
 			<tr>
-				<td>¹øÈ£</td>
-				<td>Á¦¸ñ</td>
-				<td>ÀúÀÚ</td>
-				<td>ÃâÆÇÀÏ</td>
+				<td>ë²ˆí˜¸</td>
+				<td>ì œëª©</td>
+				<td>ì €ì</td>
+				<td>ì¶œíŒì¼</td>
 			</tr>
 		</thead>
 		<tbody>
