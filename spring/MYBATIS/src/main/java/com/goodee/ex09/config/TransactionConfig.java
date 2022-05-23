@@ -28,6 +28,9 @@ public class TransactionConfig {
 	@Bean
 	public TransactionInterceptor interceptor() {
 
+//		인터셉터 : 정상적인 흐름을 가로 채서 실행되는 것을 의미
+//		모든 자바 예외(Exception)가 발생하면 Rollback 수행
+
 		MatchAlwaysTransactionAttributeSource source = new MatchAlwaysTransactionAttributeSource();
 		RuleBasedTransactionAttribute attribute = new RuleBasedTransactionAttribute();
 		attribute.setName("*");

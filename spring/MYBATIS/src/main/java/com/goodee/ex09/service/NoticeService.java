@@ -2,18 +2,24 @@ package com.goodee.ex09.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.goodee.ex09.domain.NoticeDTO;
 
 public interface NoticeService {
 
 	public List<NoticeDTO> findNotices();
 
-	public NoticeDTO findNoticeByNo(long noticeNo);
+	public NoticeDTO findNoticeByNo(HttpServletRequest request);
 
-	public int save(NoticeDTO notice);
+	public int save(HttpServletRequest request);
 
-	public int change(NoticeDTO notice);
+	public int change(HttpServletRequest request);
 
-	public int remove(long noticeNo);
+	public int removeOne(HttpServletRequest request);
+
+	public int removeList(HttpServletRequest request);
+
+	public int removeList2(HttpServletRequest request);
 
 }

@@ -19,6 +19,23 @@ public class NoticeRepository {
 	}
 
 	public NoticeDTO selectNoticeByNo(long noticeNo) {
-		return sqlSessionTemplate.selectOne("mybatis.mapper.notice.selectNoticeByNo");
+		return sqlSessionTemplate.selectOne("mybatis.mapper.notice.selectNoticeByNo", noticeNo);
 	}
+
+	public int insertNotice(NoticeDTO notice) {
+		return sqlSessionTemplate.insert("mybatis.mapper.notice.insertNotice", notice);
+	}
+
+	public int updateHit(long noticeNo) {
+		return sqlSessionTemplate.update("mybatis.mapper.notice.updateHit", noticeNo);
+	}
+
+	public int updateNotice(NoticeDTO notice) {
+		return sqlSessionTemplate.update("mybatis.mapper.notice.updateNotice", notice);
+	}
+
+	public int deleteNotice(long noticeNo) {
+		return sqlSessionTemplate.delete("mybatis.mapper.notice.deleteNoticeByNo", noticeNo);
+	}
+
 }
