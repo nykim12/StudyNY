@@ -103,7 +103,7 @@
 				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
 				
-			<Context docBase="SPRING_JDBC" path="/ex08" reloadable="true" source="org.eclipse.jst.jee.server:SPRING_JDBC"/><Context docBase="MYBATIS" path="/ex09" reloadable="true" source="org.eclipse.jst.jee.server:MYBATIS"/></Host>
+			<Context docBase="PAGING_SEARCH" path="/ex11" reloadable="true" source="org.eclipse.jst.jee.server:PAGING_SEARCH"/></Host>
 		</Engine>
 	</Service>
 </Server>

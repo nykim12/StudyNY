@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.goodee.ex11.mapper.EmployeeMapper">
+
+	<select id="selectEmployeeCount" resultType="Integer">
+		SELECT COUNT(*)
+			FROM EMPLOYEES
+	</select>
+
+	<select id="selectEmployees" parameterType="Map" resultType="Employee">
+		SELECT A.RANK, A.*
+			FROM (SELECT RANK() OVER (ORDER BY HIRE_DATE DESC) AS RANK, *
+			FROM EMPLOYEES) A
+		WHERE
+			A.RANK
+		BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+
+</mapper>

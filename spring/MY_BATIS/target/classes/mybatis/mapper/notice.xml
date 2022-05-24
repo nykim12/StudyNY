@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 
+
+	mapper namespace가 달라짐
+	notice.xml의 쿼리문을 호출할 NoticeMapper.java를 namespace로 작성
+
+-->
+
+<mapper namespace="com.goodee.ex10.mapper.NoticeMapper">
+
+	<select id="selectNoticeList" resultType="NoticeDTO">
+		SELECT NOTICE_NO, TITLE, CONTENT, HIT, CREATED, LASTMODIFIED
+			FROM NOTICE
+		ORDER BY NOTICE_NO DESC
+	</select>
+
+	<select id="selectNoticeByNo" resultType="NoticeDTO">
+		SELECT NOTICE_NO, TITLE, CONTENT, HIT, CREATED, LASTMODIFIED
+			FROM NOTICE
+		WHERE NOTICE_NO = #{noticeNo}
+	</select>
+
+	<insert id="insertNotice" parameterType="NoticeDTO">
+		INSERT INTO NOTICE
+			(NOTICE_NO, TITLE, CONTENT, HIT, CREATED, LASTMODIFIED)
+		VALUES
+			(NOTICE_SEQ.NEXTVAL, #{title}, #{content}, 0, SYSTIMESTAMP, SYSTIMESTAMP)
+	</insert>
+
+	<delete id="deleteNoticeByNo">
+		DELETE FROM NOTICE WHERE NOTICE_NO = #{noticeNo}
+	</delete>
+
+	<delete id="deleteNoticeList">
+		DELETE
+			FROM NOTICE
+		<where>
+			<foreach collection="noticeNoList" item="noticeNo" open="NOTICE_NO IN(" separator="," close=")">
+        		#{noticeNo}
+     		</foreach>
+     	</where>
+	</delete>
+
+	<update id="updateHit" parameterType="Long">
+		UPDATE
+				NOTICE
+			SET
+				HIT = HIT + 1
+		WHERE
+				NOTICE_NO = #{noticeNo}
+	</update>
+
+	<update id="updateNotice" parameterType="NoticeDTO">
+		UPDATE
+				NOTICE
+			SET
+		   		TITLE = #{title}
+		   		, CONTENT = #{content}
+		    	, LASTMODIFIED = SYSTIMESTAMP
+		 WHERE
+		 		NOTICE_NO = #{noticeNo}
+	</update>
+
+</mapper>
+
+<!--
+	${noticeNo}	: 10
+	#{title}	: '공지'
+-->

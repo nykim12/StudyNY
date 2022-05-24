@@ -67,7 +67,7 @@ public class NoticeController {
 		model.addAttribute("notice", noticeService.findNoticeByNo(request));
 		return "notice/change";
 	}
-	
+
 	@PostMapping("/notice/change")
 	public String change(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 

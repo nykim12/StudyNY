@@ -81,12 +81,12 @@ public class NoticeSeriviceImpl implements NoticeService {
 
 //		한 번에 여러 번 지우기
 //		DELETE FROM NOTICE WHERE NOTICE_NO IN {1,4}
-		String[] noticeNoList = request.getParameterValues("noticeNoList");
+		String[] noticeNoList = request.getParameterValues("noticeNoList");  // {"1", "4"}
 		List<Long> list = new ArrayList<>();
 		for(int i = 0; i < noticeNoList.length; i++) {
-			list.add(Long.parseLong(noticeNoList[i]));
+			list.add(Long.parseLong(noticeNoList[i]));  // list.add(1) -> list.add(4)
 		}
-		return 0;
+		return noticeRepository.deleteNoticeList(list);
 
 	}
 }
