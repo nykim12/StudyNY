@@ -5,17 +5,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.goodee.ex11.mapper.EmployeeMapper">
 
-	<select id="selectEmployeeCount" resultType="Integer">
-		SELECT COUNT(*)
-			FROM EMPLOYEES
+	<select id="selectEmployeeCount" resultType="int">
+		SELECT COUNT(*) FROM EMPLOYEES
 	</select>
 
-	<select id="selectEmployees" parameterType="Map" resultType="Employee">
-		SELECT A.RANK, A.*
-			FROM (SELECT RANK() OVER (ORDER BY HIRE_DATE DESC) AS RANK, *
+	<select id="selectEmployees" parameterType="Map" resultType="Department">
+		SELECT A.RK, A.*
+			FROM (SELECT RANK() OVER (ORDER BY HIRE_DATE DESC) AS RK, EMPLOYEES.*
 			FROM EMPLOYEES) A
 		WHERE
-			A.RANK
+			A.RK
 		BETWEEN #{beginRecord} AND #{endRecord}
 	</select>
 

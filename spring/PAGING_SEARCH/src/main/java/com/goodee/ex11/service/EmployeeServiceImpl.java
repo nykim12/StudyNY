@@ -39,6 +39,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<Employee> employees = employeeMapper.selectEmployees(map);
 
 		model.addAttribute("employees", employees);
+		model.addAttribute("beginNo", totalRecord - pageUtils.getRecordPerPage() * (page-1));
+		model.addAttribute("paging", pageUtils.getPaging(request.getContextPath() + "/employee/list"));
 
 	}
 
