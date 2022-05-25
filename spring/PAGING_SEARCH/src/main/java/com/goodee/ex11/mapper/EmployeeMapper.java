@@ -14,4 +14,9 @@ public interface EmployeeMapper {
 
 	public int selectEmployeeCount();
 
+	public List<Employee> selectFindList(Map<String, Object> map);
+
+	public int selectFindCount(Map<String, Object> map);
+
+	public List<Employee> autoComplete(Map<String, Object> map);
 }

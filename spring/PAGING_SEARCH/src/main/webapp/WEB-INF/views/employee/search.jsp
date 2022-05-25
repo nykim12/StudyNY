@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +13,9 @@
 
 	$(function(){
 		fnAreaChoice();
+		fnbtnSearchAll();
+		fnSearch();
+		fnAutoComplete();
 	})
 
 
@@ -23,7 +28,7 @@
 		$('#column').on('change', function(){
 			if($(this).val() == '') {
 				$('#equalArea, #rangeArea').css('display', 'none');
-			} else if( $(this).val() == 'EMPLOYEE_ID' || $(this).val() == 'FIRST_NAME' ) {
+			} else if( $(this).val() == 'EMPLOYEE_ID' || $(this).val() == 'FIRST_NAME') {
 				$('#equalArea').css('display', 'inline');
 				$('#rangeArea').css('display', 'none');
 			} else {
@@ -34,6 +39,80 @@
 
 	}
 
+
+	function fnbtnSearchAll(){
+
+		$('#btnSearchAll').on('click', function(){
+			location.href="${contextPath}/employee/list";
+		})
+
+	}
+
+		
+	function fnSearch(){
+			
+		var column = $('#column');
+		var query = $('#query');
+		var begin = $('#begin');
+		var end = $('#end');
+			
+		$('#btnSearch').on('click', function(){
+				
+			// 사원번호 검색
+			var regEmpId = /^[0-9]{3}$/;  // 숫자 3자리여야 함.
+			if( column.val() == 'EMPLOYEE_ID' && regEmpId.test(query.val()) == false) {
+				alert('사원번호가 올바르지 않습니다.');
+				query.focus();
+				return;
+			}
+				
+			// 입사일자 검색
+			var regHireDate = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;  // 2022-05-25
+			if( column.val() == 'HIRE_DATE' && (!regHireDate.test(begin.val()) || !regHireDate.test(end.val())) ){
+				alert('입사일자가 올바르지 않습니다.');
+				return;
+			}
+				
+			// 연봉 검색
+			if( column.val() == 'SALARY' && (isNaN(begin.val()) || isNaN(end.val())) ) {
+				alert('연봉이 올바르지 않습니다.');
+				return;
+			}
+				
+			// 검색 실행
+			// equalArea 작업은 column, query 파라미터 전송
+			// rangeArea 작업은 column, begin, end 파라미터 전송
+			if( column.val() == 'EMPLOYEE_ID' || column.val() == 'FIRST_NAME' ) {
+				location.href="${contextPath}/employee/search?column=" + column.val() + "&query=" + query.val();
+			} else {
+			location.href="${contextPath}/employee/search?column=" + column.val() + "&begin=" + begin.val() + "&end=" + end.val();
+			}
+		})
+	}
+		
+		
+		
+	function fnAutoComplete(){
+
+		$('#query').on('keyup', function(){
+			$('#autoComplete').empty();
+			$.ajax({
+			url: '${contextPath}/employee/autoComplete',
+			type: 'GET',
+			data: 'column=' + $('#column').val()+'&query='+$('#query').val(),
+			dataType: 'json',
+			success: function(res){
+					if(res.status == 200) {
+						$.each(res.list, function(i, item){
+							$('<option>')
+							.val(item[res.column])
+							.appendTo('#autoComplete');
+						})
+					}
+				}	
+			})
+		})
+	}
 
 
 </script>
@@ -55,7 +134,7 @@
 			<datalist id="autoComplete"></datalist>
 		</span>
 		<span id="rangeArea">
-			<input type="text" name="begin" id="bigin">
+			<input type="text" name="begin" id="begin">
 			~
 			<input type="text" name="end" id="end">
 		</span>

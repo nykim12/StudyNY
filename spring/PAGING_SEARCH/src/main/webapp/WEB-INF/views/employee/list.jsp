@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="../resources/js/jquery-3.6.0.js"></script>
 </head>
 <body>
 
@@ -32,7 +31,7 @@
 					<td>${emp.hireDate}</td>
 					<td>${emp.salary}</td>
 					<td>${emp.departmentId}</td>
-					<td>부서이름</td>
+					<td>${emp.departmentName}</td>
 				</tr>
 			</c:forEach>
 		</tbody>

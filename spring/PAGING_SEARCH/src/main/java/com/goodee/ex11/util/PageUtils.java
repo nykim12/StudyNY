@@ -89,11 +89,13 @@ public class PageUtils {
 
 		StringBuilder sb = new StringBuilder();
 
+		String concat = path.contains("?") ? "&" : "?";
+
 		// 1페이지로 이동, 1페이지는 <a> 태그가 없다.
 		if(page == 1) {
 			sb.append("prev");
 		} else {
-			sb.append("<a href=\"" + path + "?page=1\">1</a>");
+			sb.append("<a href=\"" + path + concat + "page=1\">1</a>");
 		}
 
 
@@ -101,7 +103,7 @@ public class PageUtils {
 		if(page <= pagePerBlock) {
 			sb.append("prevBlock");
 		} else {
-			sb.append("<a href=\"" + path + "?page=" + (beginPage - 1) + "\">prevBlock</a>");
+			sb.append("<a href=\"" + path + concat + "page=" + (beginPage - 1) + "\">prevBlock</a>");
 		}
 
 
@@ -109,7 +111,7 @@ public class PageUtils {
 		if(page == 1) {
 			sb.append("prev");
 		} else {
-			sb.append("<a href=\"" + path + "?page=" + (page - 1) + "\">prev</a>");
+			sb.append("<a href=\"" + path + concat + "page=" + (page - 1) + "\">prev</a>");
 		}
 
 
@@ -118,7 +120,7 @@ public class PageUtils {
 			if(p == page) {
 				sb.append(p);
 			} else {
-				sb.append("<a href=\"" + path + "?page=" + p + "\">" + p + "</a>");
+				sb.append("<a href=\"" + path + concat + "page=" + p + "\">" + p + "</a>");
 			}
 		}
 
@@ -127,7 +129,7 @@ public class PageUtils {
 		if(page == totalPage) {
 			sb.append("next");
 		} else {
-			sb.append("<a href=\"" + path + "?page=" + (page + 1) + "\">next</a>");
+			sb.append("<a href=\"" + path + concat + "page=" + (page + 1) + "\">next</a>");
 		}
 
 
@@ -135,7 +137,7 @@ public class PageUtils {
 		if(endPage == totalPage) {
 			sb.append("nextBlock");
 		} else {
-			sb.append("<a href=\"" + path + "?page=" + (endPage + 1) + "\">nextBlock</a>");
+			sb.append("<a href=\"" + path + concat + "page=" + (endPage + 1) + "\">nextBlock</a>");
 		}
 
 
@@ -143,7 +145,7 @@ public class PageUtils {
 		if(page == totalPage) {
 			sb.append("next");
 		} else {
-			sb.append("<a href=\"" + path + "?page=" + totalPage + "\">" + totalPage + "</a>");
+			sb.append("<a href=\"" + path + concat + "page=" + totalPage + "\">" + totalPage + "</a>");
 		}
 				
 		return sb.toString();
