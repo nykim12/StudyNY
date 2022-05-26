@@ -14,14 +14,14 @@ public interface BoardMapper {
 
 	public int selectBoardCount();
 
-	public Board selectBoardByNo(Long boardNo);
+	public Board selectBoardByNo(long boardNo);
 
-	public int updateBoardHit(Long boardNo);
+	public int updateBoardHit(long boardNo);
 
 	public int insertBoard(Board board);
 
 	public int updateBoard(Board board);
 
-	public int deleteBoard(Long boardNo);
+	public int deleteBoard(long boardNo);
 
 }

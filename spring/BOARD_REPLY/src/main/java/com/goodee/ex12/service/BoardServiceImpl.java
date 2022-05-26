@@ -1,17 +1,21 @@
 package com.goodee.ex12.service;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.goodee.ex12.domain.Board;
+import com.goodee.ex12.domain.Reply;
 import com.goodee.ex12.mapper.BoardMapper;
 import com.goodee.ex12.util.PageUtils;
 
@@ -45,10 +49,43 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void findBoardByNo(HttpServletRequest request, Model model) {
+	public void findBoardByNo(HttpServletRequest request, HttpServletResponse response, Model model) {
 
+		Optional<String> opt = Optional.ofNullable(request.getParameter("boardNo"));
+		long boardNo = Long.parseLong(opt.orElse("0"));
+
+		String requestURI = request.getRequestURI();
+		if (requestURI.endsWith("detail")) {
+			boardMapper.updateBoardHit(boardNo);
+		}
+
+		Board board = boardMapper.selectBoardByNo(boardNo);
+
+		if (board != null) {
+
+			request.getSession().setAttribute("board", board);
+
+			List<Reply> replies = null;
+
+//			세션에 의해 추가하지 않아도 될 정보
+//			model.addAttribute("board", board);
+			model.addAttribute("replies", replies);
+
+		} else {
+			try {
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('일치하는 게시글이 없습니다.')");
+				out.println("history.back()");
+				out.println("</script>");
+				out.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
+	@Transactional // save() 에 있는 모든 쿼리문은 모두 성공해야 함
 	@Override
 	public int save(HttpServletRequest request) {
 
@@ -65,20 +102,28 @@ public class BoardServiceImpl implements BoardService {
 			ip = request.getRemoteAddr();
 		}
 
-		return 0;
+		Board board = Board.builder().
+				writer(writer).
+				title(title).
+				content(content).
+				ip(ip).
+				build();
+
+		return boardMapper.insertBoard(board);
 
 	}
 
 	@Override
 	public int change(Board board) {
-
-		return 0;
+		
+		return boardMapper.updateBoard(board);
 	}
 
 	@Override
 	public int remove(Long boardNo) {
 
-		return 0;
+		return boardMapper.deleteBoard(boardNo);
+
 	}
 
 }

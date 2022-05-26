@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Reply {
 
-	private Long replyNo;
+	private long replyNo;
 	private String writer;
 	private String content;
 	private String ip;
-	private Long boardNo;
+	private long boardNo;
 	private Date created;
 
 }

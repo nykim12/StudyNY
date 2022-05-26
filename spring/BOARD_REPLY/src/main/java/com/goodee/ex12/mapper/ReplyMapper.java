@@ -9,12 +9,12 @@ import com.goodee.ex12.domain.Reply;
 @Mapper
 public interface ReplyMapper {
 
-	public List<Reply> selectReplyList(Long boardNo);
+	public List<Reply> selectReplyList(long boardNo);
 
-	public int selectReplyCount(Long boardNo);
+	public int selectReplyCount(long boardNo);
 
 	public int insertReply(Reply reply);
 
-	public int deleteReply(Long replyNo);
+	public int deleteReply(long replyNo);
 
 }

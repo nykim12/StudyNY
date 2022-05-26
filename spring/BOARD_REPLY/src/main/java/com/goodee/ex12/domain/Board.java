@@ -17,7 +17,7 @@ public class Board {
 	private String writer;
 	private String title;
 	private String content;
-	private Long hit;
+	private long hit;
 	private String ip;
 	private Date created;
 	private Date modified;
