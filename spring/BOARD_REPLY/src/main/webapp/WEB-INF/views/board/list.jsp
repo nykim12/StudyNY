@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,13 +31,13 @@
 				<td>제목</td>
 				<td>작성자</td>
 				<td>조회수</td>
-				<td>작성일</td>
+				<td>작성일자</td>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${boards}" var="board">
 				<tr>
-					<td>순번</td>
+					<td>${totalRecord + 1 - board.rn}</td>
 					<td>${board.title}</td>
 					<td>${board.writer}</td>
 					<td>${board.hit}</td>
@@ -51,5 +53,6 @@
 			</tr>
 		</tfoot>
 	</table>
+
 </body>
 </html>

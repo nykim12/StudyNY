@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Board {
+	private long rn;
 	private Long boardNo;
 	private String writer;
 	private String title;

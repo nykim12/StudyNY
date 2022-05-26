@@ -103,7 +103,7 @@
 				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
 				
-			</Host>
+			<Context docBase="BOARD_REPLY" path="/ex12" reloadable="true" source="org.eclipse.jst.jee.server:BOARD_REPLY"/></Host>
 		</Engine>
 	</Service>
 </Server>
