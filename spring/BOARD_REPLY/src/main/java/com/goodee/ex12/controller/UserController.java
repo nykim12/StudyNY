@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.goodee.ex12.util.SecurityUtils;
+
 @Controller
 public class UserController {
 
@@ -22,7 +24,7 @@ public class UserController {
 	public String login(HttpSession session, HttpServletRequest request) {
 		// 마치 로그인처럼 아이디, 비번, 이름을 Map으로 만들어서 session에 보관
 		Map<String, String> user = new HashMap<>();
-		user.put("id", request.getParameter("id"));
+		user.put("id", SecurityUtils.XSS(request.getParameter("id")));
 		user.put("pw", request.getParameter("pw"));
 		user.put("name", "아무개");
 		session.setAttribute("user", user);
