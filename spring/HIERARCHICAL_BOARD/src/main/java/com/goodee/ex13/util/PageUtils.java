@@ -83,7 +83,7 @@ public class PageUtils {
 			
 		// 이전 블록으로 이동, 1블록은 <a> 태그가 없다.
 		if(page <= pagePerBlock) {
-			sb.append("<span class=\"unlink\"><i class=\"fa-solid fa-backward\"></i></span>");
+			sb.append("<span class=\"unlink\"><i class=\"fa-solid fa-backward\"></i></span>" + "&nbsp;");
 		} else {
 			sb.append("<a class=\"link\" href=\"" + path + "page=" + (beginPage - 1) + "\"><i class=\"fa-solid fa-backward\"></i></a>");
 		}
@@ -92,15 +92,15 @@ public class PageUtils {
 		if(page == 1) {
 			sb.append("<span class=\"unlink\">prev</span>");
 		} else {
-			sb.append("<a class=\"link\" href=\"" + path + "page=" + (page - 1) + "\">prev</a>");
+			sb.append("&nbsp;&nbsp;"+"<a class=\"link\" href=\"" + path + "page=" + (page - 1) + "\">prev</a>");
 		}
 		
 		// 페이지 번호 (1 2 3 4 5), 현재 페이지는 <a> 태그가 없다.
 		for(int p = beginPage; p <= endPage; p++) {
 			if(p == page) {
-				sb.append("<span class=\"unlink\">" + p + "</span>");
+				sb.append("<span class=\"unlink\">" + p + "</span>" + "&nbsp;");
 			} else {
-				sb.append("<a class=\"link\" href=\"" + path + "page=" + p + "\">" + p + "</a>");
+				sb.append("<a class=\"link\" href=\"" + path + "page=" + p + "\">" + p + "</a>" + "&nbsp;");
 			}
 		}
 		
@@ -108,7 +108,7 @@ public class PageUtils {
 		if(page == totalPage) {
 			sb.append("<span class=\"unlink\">next</span>");
 		} else {
-			sb.append("<a class=\"link\" href=\"" + path + "page=" + (page + 1) + "\">next</a>");
+			sb.append("<a class=\"link\" href=\"" + path + "page=" + (page + 1) + "\">next</a>"+"&nbsp;&nbsp;");
 		}
 		
 		// 다음 블록으로 이동, 마지막 블록에는 <a> 태그가 없다.

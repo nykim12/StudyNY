@@ -6,6 +6,14 @@
 <html>
 <head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+<script src="../resources/js/jquery-3.6.0.js"></script>
+<script>
+	$(function(){
+		$('.reply_link').on('click', function(){
+			$(this).parent().parent().next().toggleClass('reply_form');
+		})
+	})
+</script>
 <style>
 	.reply_form {
 		display: none;
@@ -68,19 +76,19 @@
 								</c:if>
 							</td>
 							<td>${fb.created}</td>
-							<td>delete</td>
+							<td>삭제버튼보여주기</td>
 						</tr>
 						<!-- class 속성값 reply_form을 가지고 있으면 안 보임 -->
 						<tr class="reply_form">
 							<td colspan="5">
 								<form action="${contextPath}/freeBoard/saveReply" method="post">
 									<input type="text" name="writer" placeholder="작성자" size="4">
-									<input type="text" name="content" placeholder="내용" size="8">
+									<input type="text" name="content" placeholder="내용" size="40">
 									<!-- 원글의 Depth, GroupNo, GroupOrd -->
 									<input type="hidden" name="depth" value="${fb.depth}">
 									<input type="hidden" name="groupNo" value="${fb.groupNo}">
 									<input type="hidden" name="groupOrd" value="${fb.groupOrd}">
-									<button>답글달기</button>
+									<button>등록</button>
 								</form>
 							</td>
 						</tr>
