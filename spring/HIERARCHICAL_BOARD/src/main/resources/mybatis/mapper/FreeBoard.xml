@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 목록 -->
 	<select id="selectFreeBoardList" parameterType="Map" resultType="FreeBoard">
 		SELECT A.ROW_NUM, A.*
-			FROM (SELECT ROW_NUMBER() OVER(ORDER BY GROUPNO DESC, GROUPORD) AS ROW_NUM, FREE_BOARD.*
+			FROM (SELECT ROW_NUMBER() OVER(ORDER BY GROUP_NO DESC, GROUP_ORD) AS ROW_NUM, FREE_BOARD.*
 				FROM FREE_BOARD) A
 		WHERE A.ROW_NUM BETWEEN ${beginRecord} AND #{endRecord}
 	</select>
