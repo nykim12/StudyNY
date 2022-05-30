@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.goodee.ex13.mapper.FreeBoardMapper">
+
+	<!-- 목록 -->
+	<select id="selectFreeBoardList" parameterType="Map" resultType="FreeBoard">
+		SELECT A.ROW_NUM, A.*
+			FROM (SELECT ROW_NUMBER() OVER(ORDER BY GROUPNO DESC, GROUPORD) AS ROW_NUM, FREE_BOARD.*
+				FROM FREE_BOARD) A
+		WHERE A.ROW_NUM BETWEEN ${beginRecord} AND #{endRecord}
+	</select>
+
+	<!-- 갯수 -->
+	<select id="selectFreeBoardCount" resultType="Integer">
+		SELECT COUNT(FREE_BOARD_NO)
+			FROM FREE_BOARD 
+	</select>
+
+	<!-- 원글 등록 -->
+	<insert id="insertFreeBoard" parameterType="FreeBoard">
+		INSERT INTO FREE_BOARD
+			(FREE_BOARD_NO, WRITER, CONTENT, IP, CREATED, MODIFIED, STATE, DEPTH, GROUP_NO, GROUP_ORD)
+		VALUES
+			(FREE_BOARD_SEQ, #{writer}, #{content}, #{ip}, SYSDATE, SYSDATE, 1, 0, FREE_BOARD_SEQ.CURRVAL, 0)
+	</insert>
+
+	<!--
+		댓글 등록 전 처리, 같은 그룹의 기존 댓글의 GROUP_ORD 값 증가시키기
+		parameterType="FreeBoard" : 원글의 정보
+	-->
+	<update id="updatePreviousReply" parameterType="FreeBoard">
+		UPDATE FREE_BOARD
+			SET GROUP_ORD = GROUP_ORD + 1
+		WHERE GROUP_NO = #{groupNo}	<!-- 원글과 같은 그룹 -->
+			AND GROUP_ORD > 0		<!-- 기존의 댓글 -->
+	</update>
+
+	<!-- 댓글 등록 -->
+	<insert id="insertReply" parameterType="FreeBoard">
+		INSERT INTO FREE_BOARD
+			(FREE_BOARD_NO, WRITER, CONTENT, IP, CREATED, MODIFIED, STATE, DEPTH, GROUP_NO, GROUP_ORD)
+		VALUES
+			(FREE_BOARD_SEQ, #{writer}, #{content}, #{ip}, SYSDATE, SYSDATE, 1, #{depth}, #{groupNo}, #{groupOrd})
+	</insert>
+
+	<!-- 댓글 삭제 -->
+	<update id="deleteFreeBoard" parameterType="Long">
+		UPDATE FREE_BOARD
+			SET STATE = -1
+		WHERE FREE_BOARD_NO = #{freeBoardNo}
+	</update>
+
+</mapper>
