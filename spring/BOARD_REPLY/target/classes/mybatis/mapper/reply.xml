@@ -6,16 +6,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.goodee.ex12.mapper.ReplyMapper">
 
 	<!-- 댓글 목록 -->
-	<select id="selectReplyList" parameterType="Long"
-		resultType="reply">
+	<select id="selectReplyList" parameterType="Long" resultType="reply">
 		SELECT REPLY_NO, WRITER, CONTENT, IP, BOARD_NO, CREATED
 		FROM REPLY
 		WHERE BOARD_NO = #{boardNo}
 	</select>
 
 	<!-- 해당 게시글에 달린 댓글의 갯수 -->
-	<select id="selectReplyCount" parameterType="Long"
-		resultType="Integer">
+	<select id="selectReplyCount" parameterType="Long" resultType="Integer">
 		SELECT COUNT(REPLY_NO)
 		FROM REPLY
 		WHERE BOARD_NO = #{boardNo}

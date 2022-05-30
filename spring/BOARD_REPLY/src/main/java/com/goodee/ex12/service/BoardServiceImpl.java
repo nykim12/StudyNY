@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.goodee.ex12.domain.Board;
-import com.goodee.ex12.domain.Reply;
 import com.goodee.ex12.mapper.BoardMapper;
 import com.goodee.ex12.util.PageUtils;
 
@@ -61,15 +60,10 @@ public class BoardServiceImpl implements BoardService {
 
 		Board board = boardMapper.selectBoardByNo(boardNo);
 
+//		게시글이 존재하면 session에 두기
 		if (board != null) {
 
 			request.getSession().setAttribute("board", board);
-
-			List<Reply> replies = null;
-
-//			세션에 의해 추가하지 않아도 될 정보
-//			model.addAttribute("board", board);
-			model.addAttribute("replies", replies);
 
 		} else {
 			try {
