@@ -18,3 +18,17 @@ FREE_BOARD_NO	CONTENT		DEPTH	GROUPNO		GROUPORD
 
 최근 게시물과 댓글이 먼저 표시되게 정렬하기
 ㄴ ORDER BY GROUPNO DESC, GROUPORD ASC
+
+
+
+* 파일 첨부 *  
+  
+1. 단일 첨부
+
+2. 다중 첨부 - 테이블 분리
+
+ 게시글1	- 첨부1
+	 	- 첨부2
+
+게시판 TABLE	: 번호(PK), 제목, 내용, 작성자
+첨부	TABLE	: 첨부번호, 게시글번호(FK), 첨부파일명, 경로

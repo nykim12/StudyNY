@@ -90,9 +90,9 @@ public class PageUtils {
 		
 		// 이전 페이지 (prev), 1페이지는 <a> 태그가 없다.
 		if(page == 1) {
-			sb.append("<span class=\"unlink\">prev</span>");
+			sb.append("<span class=\"unlink\">prev</span>"+ "&nbsp;");
 		} else {
-			sb.append("&nbsp;&nbsp;"+"<a class=\"link\" href=\"" + path + "page=" + (page - 1) + "\">prev</a>");
+			sb.append("&nbsp;"+"<a class=\"link\" href=\"" + path + "page=" + (page - 1) + "\">prev</a>" + "&nbsp;");
 		}
 		
 		// 페이지 번호 (1 2 3 4 5), 현재 페이지는 <a> 태그가 없다.
@@ -106,9 +106,9 @@ public class PageUtils {
 		
 		// 다음 페이지 (next), 마지막 페이지는 <a> 태그가 없다.
 		if(page == totalPage) {
-			sb.append("<span class=\"unlink\">next</span>");
+			sb.append("<span class=\"unlink\">next</span>"+ "&nbsp;");
 		} else {
-			sb.append("<a class=\"link\" href=\"" + path + "page=" + (page + 1) + "\">next</a>"+"&nbsp;&nbsp;");
+			sb.append("<a class=\"link\" href=\"" + path + "page=" + (page + 1) + "\">next</a>"+"&nbsp;");
 		}
 		
 		// 다음 블록으로 이동, 마지막 블록에는 <a> 태그가 없다.

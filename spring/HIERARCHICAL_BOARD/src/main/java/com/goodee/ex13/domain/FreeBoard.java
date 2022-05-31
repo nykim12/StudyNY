@@ -19,10 +19,9 @@ public class FreeBoard {
 	private String content;
 	private String ip;
 	private Date created;
-	private Date modified;
 	private int state;
 	private int depth;
-	private int groupNo;
+	private long groupNo;
 	private int groupOrd;
 
 }

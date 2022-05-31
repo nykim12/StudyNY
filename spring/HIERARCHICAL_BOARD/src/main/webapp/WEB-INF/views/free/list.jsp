@@ -5,26 +5,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <script>
+
 	$(function(){
 		$('.reply_link').on('click', function(){
 			$(this).parent().parent().next().toggleClass('reply_form');
 		})
 	})
+	
 </script>
 <style>
-	.reply_form {
-		display: none;
-	}
+.reply_form {
+	display: none;
+}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 
-	<a href="">새글작성</a>
+	<h3>게시글 작성 화면</h3>
+	<c:if test="${user != null}">
+	<form action="${contextPath}/freeBoard/saveFreeBoard" method="post">
+		<input type="text" name="writer" value="${user.id}" placeholder="작성자">
+		<input type="text" name="content" placeholder="내용">
+		<button>작성완료</button>
+	</form>
+	</c:if>
 
 	<hr>
 
@@ -49,12 +58,13 @@
 				<c:forEach var="fb" items="${freeBoards}">
 					<c:if test="${fb.state == -1}">
 						<tr>
-							<td colspan="5">삭제된 게시글입니다.</td>
+							<td>${totalRecord - fb.rowNum + 1}</td>
+							<td colspan="4">삭제된 게시글입니다.</td>
 						</tr>
 					</c:if>
 					<c:if test="${fb.state == 1}">
 						<tr>
-							<td>${fb.rowNum}</td>
+							<td>${totalRecord - fb.rowNum + 1}</td>
 							<td>${fb.writer}</td>
 							<td>
 								<!-- Depth만큼 들여쓰기(Depth 1단계 : +2 space) -->
@@ -71,12 +81,29 @@
 									${fb.content}
 								</c:if>
 								<!-- 답글 등록 : if가 있으면 1단 댓글만 허용 / if가 없으면 다단 댓글 허용 -->
-								<c:if test="${fb.depth eq 0}">
-									<a class="reply_link">답글</a>
-								</c:if>
+								<%-- <c:if test="${fb.depth eq 0}"> --%>
+								<a class="reply_link">답글</a>
+								<%-- </c:if> --%>
 							</td>
 							<td>${fb.created}</td>
-							<td>삭제버튼보여주기</td>
+							<td>
+								<c:if test="${user.id == fb.writer}">
+									<a href="${contextPath}/freeBoard/remove?freeBoardNo=${fb.freeBoardNo}" onclick="btnRemove(this)">
+										<i class="fa-solid fa-trash-can"></i>
+									</a>
+									<script>
+										function btnRemove(a) {
+											$(a).on('click', function(event){
+												if(confirm('삭제할까요?') == false){
+													event.preventDefault();	// 전달된 <a> 태그의 이벤트 취소
+													return false;
+												}
+												return true;	// 전달된 <a> 태그의 이벤트 진행
+											})							
+										}
+									</script>
+								</c:if>
+							</td>
 						</tr>
 						<!-- class 속성값 reply_form을 가지고 있으면 안 보임 -->
 						<tr class="reply_form">
@@ -98,9 +125,7 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="5">
-					${paging}
-				</td>
+				<td colspan="5">${paging}</td>
 			</tr>
 		</tfoot>
 	</table>
