@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.goodee.ex14.mapper.GalleryMapper">
+
+	<!--
+		Gallery에 FileAttach를 넣은 resultMap 처리(조인에서 활용)
+	-->
+	<resultMap type="gallery" id="GalleryMap">
+		<result column="GALLERY_NO" property="galleryNo" />
+		<result column="WRITER" property="writer" />
+		<result column="TITLE" property="title" />
+		<result column="CONTENT" property="content" />
+		<result column="IP" property="ip" />
+		<result column="HIT" property="hit" />
+		<result column="CREATED" property="created" />
+		<result column="MODIFIED" property="modified" />
+	</resultMap>
+
+	<resultMap type="file" id="FileMap">
+		<result column="FILE_ATTACH_NO" property="fileAttachNo" />
+		<result column="PATH" property="path" />
+		<result column="ORIGIN" property="origin" />
+		<result column="SAVED" property="saved" />
+		<result column="DOWNLOAD_CNT" property="downloadCnt" />
+		<collection resultMap="GalleryMap" property="gallery" />
+	</resultMap>
+
+	<!-- selectKey : GALLERY_SEQ.NEXTVAL 값을 INSERT문을 실행하기 전(order="BEFORE") 미리 Gallery의 galleryNo에 넣어두기 -->
+	<insert id="insertGallery" parameterType="gallery">
+		<selectKey keyProperty="galleryNo" resultType="Long" order="BEFORE">
+			SELECT GALLERY_SEQ.NEXTVAL
+				FROM DUAL
+		</selectKey>
+		INSERT INTO GALLERY
+			(GALLERY_NO, WRITER, TITLE, CONTENT, IP, HIT, CREATED, MODIFIED)
+		VALUES
+			(#{galleryNo}, #{writer}, #{title}, #{content}, #{ip}, 0, SYSDATE, SYSDATE)
+	</insert>
+
+	<insert id="insertFile" parameterType="file">
+		INSERT INTO FILE_ATTACH
+			(FILE_ATTACH_NO, PATH, ORIGIN, SAVED, DOWNLOAD_CNT, GALLERY_NO)
+		VALUES
+			(FILE_SEQ.NEXTVAL, #{path}, #{origin}, #{saved}, 0, #{gallery.galleryNo})
+	</insert>
+
+	<select id="selectGalleryCount" resultType="Integer">
+		SELECT COUNT(GALLERY_NO)
+			FROM GALLERY
+	</select>
+
+
+	<select id="selectGalleryList" parameterType="Map" resultMap="FileMap">
+		SELECT A.GALLERY_NO, A.WRITER, A.TITLE, A.CONTENT, A.IP, A.HIT, A.CREATED, A.MODIFIED, A.FILE_ATTACH_NO, A.PATH, A.ORIGIN, A.SAVED, A.DOWNLOAD_CNT
+			FROM (SELECT ROW_NUMBER() OVER(ORDER BY G.GALLERY_NO DESC) AS ROW_NUM, G.GALLERY_NO, G.WRITER, G.TITLE, G.CONTENT, G.IP, G.HIT, G.CREATED, G.MODIFIED, F.FILE_ATTACH_NO, F.PATH, F.ORIGIN, F.SAVED, F.DOWNLOAD_CNT
+				FROM GALLERY G INNER JOIN FILE_ATTACH F
+				  ON G.GALLERY_NO = F.GALLERY_NO) A
+			WHERE A.ROW_NUM BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+
+	<select id="selectFileAttachByNo" parameterType="long" resultType="file">
+		SELECT FILE_ATTACH_NO, PATH, ORIGIN, SAVED, DOWNLOAD_CNT
+			FROM FILE_ATTACH
+		WHERE FILE_ATTACH_NO = #{fileAttachNo}
+	</select>
+
+
+
+
+</mapper>
