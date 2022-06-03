@@ -52,12 +52,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			FROM GALLERY
 	</select>
 
-
-	<select id="selectGalleryList" parameterType="Map" resultMap="FileMap">
-		SELECT A.GALLERY_NO, A.WRITER, A.TITLE, A.CONTENT, A.IP, A.HIT, A.CREATED, A.MODIFIED, A.FILE_ATTACH_NO, A.PATH, A.ORIGIN, A.SAVED, A.DOWNLOAD_CNT
-			FROM (SELECT ROW_NUMBER() OVER(ORDER BY G.GALLERY_NO DESC) AS ROW_NUM, G.GALLERY_NO, G.WRITER, G.TITLE, G.CONTENT, G.IP, G.HIT, G.CREATED, G.MODIFIED, F.FILE_ATTACH_NO, F.PATH, F.ORIGIN, F.SAVED, F.DOWNLOAD_CNT
-				FROM GALLERY G INNER JOIN FILE_ATTACH F
-				  ON G.GALLERY_NO = F.GALLERY_NO) A
+	<select id="selectGalleryList" parameterType="Map" resultMap="GalleryMap">
+		SELECT A.GALLERY_NO, A.WRITER, A.TITLE, A.CONTENT, A.IP, A.HIT, A.CREATED, A.MODIFIED
+			FROM (SELECT ROW_NUMBER() OVER(ORDER BY GALLERY_NO DESC) AS ROW_NUM, GALLERY_NO, WRITER, TITLE, CONTENT, IP, HIT, CREATED, MODIFIED
+				FROM GALLERY) A
 			WHERE A.ROW_NUM BETWEEN #{beginRecord} AND #{endRecord}
 	</select>
 
@@ -67,7 +65,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE FILE_ATTACH_NO = #{fileAttachNo}
 	</select>
 
+	<update id="updateDownloadCnt" parameterType="long">
+		UPDATE FILE_ATTACH
+			SET DOWNLOAD_CNT = DOWNLOAD_CNT + 1
+		WHERE FILE_ATTACH_NO = #{fileAttachNo}
+	</update>
 
+	<select id="selectGalleryByNo" parameterType="long" resultType="gallery">
+		SELECT GALLERY_NO, WRITER, TITLE, CONTENT, IP, HIT, CREATED, MODIFIED
+			FROM GALLERY
+		WHERE GALLERY_NO = #{galleryNo}
+	</select>
 
+	<select id="selectFileAttachListInTheGallery" parameterType="long" resultType="file">
+		SELECT * FROM FILE_ATTACH
+			WHERE GALLERY_NO = #{galleryNo}
+	</select>
+
+	<update id="updateGalleryHit" parameterType="long">
+		UPDATE GALLERY
+		   SET HIT = HIT + 1
+		 WHERE GALLERY_NO = #{galleryNo}
+	</update>
 
 </mapper>

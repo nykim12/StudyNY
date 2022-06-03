@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -41,20 +43,21 @@ public class GalleryController {
 
 	/*
 		gallery/display?type=thumb	썸네일 보내주기
-		gallery/display				원본이미지 보내주기	
+		gallery/display				원본이미지 보내주기
 		gallery/display?type=image
-	*/
+	 */
 
 	@ResponseBody
 	@GetMapping("/gallery/display")
-	public ResponseEntity<byte[]> display(long fileAttachNo, @RequestParam(value="type", required = false, defaultValue = "image") String type) {
+	public ResponseEntity<byte[]> display(long fileAttachNo,
+			@RequestParam(value = "type", required = false, defaultValue = "image") String type) {
 
 //		보내줘야 할 이미지 정보(path, saved) 읽기
 		FileAttach fileAttach = galleryService.findFileAttachByNo(fileAttachNo);
 
 		File file = null;
-		
-		switch(type) {
+
+		switch (type) {
 		case "thumb":
 			file = new File(fileAttach.getPath(), "s_" + fileAttach.getSaved());
 			break;
@@ -71,11 +74,22 @@ public class GalleryController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return entity;
 
 	}
-	
+
+	@GetMapping("/gallery/detail")
+	public String detail(HttpServletRequest request, Model model) {
+		galleryService.findGalleryByNo(request, model);
+		return "gallery/detail";
+	}
+
+	@ResponseBody
+	@GetMapping("/gallery/download")
+	public ResponseEntity<Resource> download(@RequestHeader("User-Agent") String userAgent, long fileAttachNo) {
+		return galleryService.download(userAgent, fileAttachNo);
+	}
 	
 	@GetMapping("/gallery/savePage")
 	public String savePage() {

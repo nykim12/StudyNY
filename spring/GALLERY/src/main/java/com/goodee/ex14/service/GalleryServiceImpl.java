@@ -2,6 +2,8 @@ package com.goodee.ex14.service;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -63,13 +70,70 @@ public class GalleryServiceImpl implements GalleryService {
 	}
 
 	@Override
-	public Gallery findGalleryByNo(long galleryNo) {
-		return null;
+	public void findGalleryByNo(HttpServletRequest request, Model model) {
+
+//		galleryNo
+		long galleryNo = Long.parseLong(request.getParameter("galleryNo"));
+
+//		조회수 증가
+		String requestURI = request.getRequestURI();
+		if (requestURI.endsWith("detail")) {
+			galleryMapper.updateGalleryHit(galleryNo);
+		}
+
+//		갤러리 정보 가져와서 model에 저장하기
+		model.addAttribute("gallery", galleryMapper.selectGalleryByNo(galleryNo));
+
+//		첨부 파일 정보 가져와서 model에 저장하기
+		model.addAttribute("fileAttaches", galleryMapper.selectFileAttachListInTheGallery(galleryNo));
+
 	}
 
 	@Override
 	public FileAttach findFileAttachByNo(long fileAttachNo) {
 		return galleryMapper.selectFileAttachByNo(fileAttachNo);
+	}
+
+	@Override
+	public ResponseEntity<Resource> download(String userAgent, long fileAttachNo) {
+
+		FileAttach fileAttach = galleryMapper.selectFileAttachByNo(fileAttachNo);
+		File file = new File(fileAttach.getPath(), fileAttach.getSaved());
+
+//		반환할 데이터
+		Resource resource = new FileSystemResource(file);
+
+//		다운로드할 파일이 없을 경우 즉시 종료
+		if (resource.exists() == false) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		galleryMapper.updateDownloadCnt(fileAttachNo);
+
+//		다운로드 헤더
+		HttpHeaders headers = new HttpHeaders();
+
+		try {
+			
+			String origin = fileAttach.getOrigin();
+			
+			if(userAgent.contains("Trident")) {
+				origin = URLEncoder.encode(origin, "UTF-8").replaceAll("\\+" , " ");
+			} else if(userAgent.contains("Edg")) {
+				origin = URLEncoder.encode(origin, "UTF-8");
+			} else {
+				origin = URLEncoder.encode(origin, "UTF-8");
+			}
+
+			headers.add("Content-Disposition", "attachment; filename=" + new String(origin.getBytes("UTF-8"), "ISO-8859-1"));
+//			headers.add("Content-Disposition", "attachment");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		headers.add("Content-Length", file.length() + "");
+
+		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
 
 	@Transactional
