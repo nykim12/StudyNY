@@ -13,15 +13,23 @@ public interface GalleryMapper {
 
 	public int insertGallery(Gallery gallery);
 	public int insertFile(FileAttach fileAttach);
-	
+
+//	갤러리 상세
 	public int selectGalleryCount();
 	public List<FileAttach> selectGalleryList(Map<String, Object> map);
 	public FileAttach selectFileAttachByNo(long fileAttachNo);
-
 	public Gallery selectGalleryByNo(long galleryNo);
 	public List<FileAttach> selectFileAttachListInTheGallery(long galleryNo);
 
-	public int updateGalleryHit(long galleryNo);
-	
+//	갤러리 삽입
+	public int updateGalleryHit(long galleryNo);	
 	public int updateDownloadCnt(long galleryNo);
+
+//	갤러리 삭제
+	public int deleteGallery(long galleryNo);
+
+	public int updateGallery(Gallery gallery);
+
+	public int deleteFileAttach(long fileAttachNo);
+
 }

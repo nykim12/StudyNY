@@ -7,10 +7,49 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	* {
+		box-sizing: border-box;
+	}
+	.unlink, .link {
+		display: inline-block;  /* 같은 줄에 둘 수 있고, width, height 등 크기 지정 속성을 지정할 수 있다. */
+		padding: 10px;
+		margin: 5px;
+		border: 1px solid white;
+		text-align: center;
+		text-decoration: none;  /* 링크 밑줄 없애기 */
+		color: gray;
+	}
+	.link:hover {
+		border: 1px solid orange;
+		color: limegreen;
+	}
+	table {
+		border-collapse: collapse;
+	}
+	td:nth-of-type(1) { width: 80px; }
+	td:nth-of-type(2) { width: 160px; }
+	td:nth-of-type(3) { width: 240px; }
+	td:nth-of-type(4) { width: 240px; }
+	td:nth-of-type(5) { width: 120px; }
+	td:nth-of-type(6) { width: 160px; }
+	td:nth-of-type(7) { width: 160px; }
+	td {
+		padding: 5px;
+		border-top: 1px solid silver;
+		border-bottom: 1px solid silver;
+		text-align: center;
+	}
+	tfoot td {
+		border-left: 0;
+		border-right: 0;
+		border-bottom: 0;
+	}
+</style>
 </head>
 <body>
 
-	<table border="1">
+	<table>
 		<thead>
 			<tr>
 				<td>순번</td>

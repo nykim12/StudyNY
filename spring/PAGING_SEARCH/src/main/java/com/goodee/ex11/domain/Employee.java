@@ -21,7 +21,6 @@ public class Employee {
 	private int salary;
 	private double commisionPct;
 	private int managerId;
-	private int departmentId;
-	private String departmentName;
+	private Department department;
 
 }

@@ -6,6 +6,28 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="../resources/js/jquery-3.6.0.js"></script>
+<script>
+
+	$(function(){
+
+		$('#btnRemove').on('click', function(){
+			if(confirm('삭제하겠습니까')){
+				location.href='${contextPath}/gallery/remove?galleryNo=${gallery.galleryNo}';
+			}
+		})
+
+		$('#btnChange').on('click', function(){
+				location.href='${contextPath}/gallery/changePage?galleryNo=${gallery.galleryNo}';
+		})
+
+		$('#btnList').on('click', function(){
+			location.href='${contextPath}/gallery/list';
+		})
+
+	})
+
+</script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -19,7 +41,11 @@
 	IP	${gallery.ip}<br>
 	조회수	${gallery.hit}<br>
 	작성일	${gallery.created}<br>
-	수정일	${gallery.modified}<br>
+	수정일	${gallery.modified}<br><br>
+
+	<input type="button" value="삭제" id="btnRemove">
+	<input type="button" value="수정" id="btnChange">
+	<input type="button" value="목록" id="btnList">
 
 	<hr>
 

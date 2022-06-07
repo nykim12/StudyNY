@@ -8,22 +8,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.goodee.ex14.domain.FileAttach;
-
 public interface GalleryService {
 
 	public void findGalleries(HttpServletRequest request, Model model);
 
-	public FileAttach findFileAttachByNo(long fileAttachNo);
-
+//	갤러리 상세
 	public void findGalleryByNo(HttpServletRequest request, Model model);
-	
+	public ResponseEntity<byte[]> display(Long fileAttachNo, String type);
 	public ResponseEntity<Resource> download(String userAgent, long fileAttachNo);
 
-	public void save(MultipartHttpServletRequest multipartRequest, HttpServletResponse response);
+	public void save(MultipartHttpServletRequest multipartrequest, HttpServletResponse response);
 
-	public void change(MultipartHttpServletRequest multipartRequest, HttpServletResponse response);
+	public void change(MultipartHttpServletRequest multipartrequest, HttpServletResponse response);
 
-	public void remove(MultipartHttpServletRequest multipartRequest, HttpServletResponse response);
+	public void removeGallery(HttpServletRequest request, HttpServletResponse response);
 
+	public void removeFileAttach(long fileAttachNo);
+	
 }

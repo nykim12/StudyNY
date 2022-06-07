@@ -16,7 +16,6 @@ public class FileAttach {
 	private String origin;
 	private String saved;
 	private int downloadCnt;
-//	private long galleryNo;
-	private Gallery gallery;
+	private long galleryNo;
 
 }

@@ -5,29 +5,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.goodee.ex14.mapper.GalleryMapper">
 
-	<!--
-		Gallery에 FileAttach를 넣은 resultMap 처리(조인에서 활용)
-	-->
-	<resultMap type="gallery" id="GalleryMap">
-		<result column="GALLERY_NO" property="galleryNo" />
-		<result column="WRITER" property="writer" />
-		<result column="TITLE" property="title" />
-		<result column="CONTENT" property="content" />
-		<result column="IP" property="ip" />
-		<result column="HIT" property="hit" />
-		<result column="CREATED" property="created" />
-		<result column="MODIFIED" property="modified" />
-	</resultMap>
-
-	<resultMap type="file" id="FileMap">
-		<result column="FILE_ATTACH_NO" property="fileAttachNo" />
-		<result column="PATH" property="path" />
-		<result column="ORIGIN" property="origin" />
-		<result column="SAVED" property="saved" />
-		<result column="DOWNLOAD_CNT" property="downloadCnt" />
-		<collection resultMap="GalleryMap" property="gallery" />
-	</resultMap>
-
 	<!-- selectKey : GALLERY_SEQ.NEXTVAL 값을 INSERT문을 실행하기 전(order="BEFORE") 미리 Gallery의 galleryNo에 넣어두기 -->
 	<insert id="insertGallery" parameterType="gallery">
 		<selectKey keyProperty="galleryNo" resultType="Long" order="BEFORE">
@@ -44,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO FILE_ATTACH
 			(FILE_ATTACH_NO, PATH, ORIGIN, SAVED, DOWNLOAD_CNT, GALLERY_NO)
 		VALUES
-			(FILE_SEQ.NEXTVAL, #{path}, #{origin}, #{saved}, 0, #{gallery.galleryNo})
+			(FILE_SEQ.NEXTVAL, #{path}, #{origin}, #{saved}, 0, #{galleryNo})
 	</insert>
 
 	<select id="selectGalleryCount" resultType="Integer">
@@ -52,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			FROM GALLERY
 	</select>
 
-	<select id="selectGalleryList" parameterType="Map" resultMap="GalleryMap">
+	<select id="selectGalleryList" parameterType="Map" resultType="gallery">
 		SELECT A.GALLERY_NO, A.WRITER, A.TITLE, A.CONTENT, A.IP, A.HIT, A.CREATED, A.MODIFIED
 			FROM (SELECT ROW_NUMBER() OVER(ORDER BY GALLERY_NO DESC) AS ROW_NUM, GALLERY_NO, WRITER, TITLE, CONTENT, IP, HIT, CREATED, MODIFIED
 				FROM GALLERY) A
@@ -87,5 +64,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   SET HIT = HIT + 1
 		 WHERE GALLERY_NO = #{galleryNo}
 	</update>
+
+	<!-- 갤러리 삭제 -->
+	<!-- Gallery 테이블의 row가 삭제되면, FILE_ATTACH 테이블의 ROW도 함께 삭제됨 -->
+	<delete id="deleteGallery" parameterType="long">
+		DELETE
+			FROM GALLERY
+		WHERE GALLERY_NO = #{galleryNo}
+	</delete>
+
+	<update id="updateGallery" parameterType="gallery">
+		UPDATE GALLERY
+		   SET TITLE = #{title}, CONTENT = #{content}, MODIFIED = SYSDATE
+		 WHERE GALLERY_NO = #{galleryNo}
+	</update>
+
+	<delete id="deleteFileAttach" parameterType="long">
+		DELETE
+			FROM FILE_ATTACH
+		WHERE FILE_ATTACH_NO = #{fileAttachNo}
+	</delete>
 
 </mapper>

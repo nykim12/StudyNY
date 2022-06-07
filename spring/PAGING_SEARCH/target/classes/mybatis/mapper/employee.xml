@@ -5,11 +5,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.goodee.ex11.mapper.EmployeeMapper">
 
+	<!-- EMPLOYEE 테이블과 DEPARTMENT 테이블의 조인 -->
+	<resultMap type="Department" id="DepartmentMap">
+		<result column="DEPARTMENT_ID" property="departmentId" />
+		<result column="DEPARTMENT_NAME" property="departmentName" />
+		<result column="MANAGER_ID" property="managerId" />
+		<result column="LOCATION_ID" property="locationId" />
+	</resultMap>
+		<resultMap type="Employee" id="EmployeeMap">
+		<result column="EMPLOYEE_ID" property="employeeId" />
+		<result column="FIRST_NAME" property="firstName" />
+		<result column="LAST_NAME" property="lastName" />
+		<result column="EMAIL" property="email" />
+		<result column="PHONE_NUMBER" property="phoneNumber" />
+		<result column="HIRE_DATE" property="hireDate" />
+		<result column="JOB_ID" property="jobId" />
+		<result column="SALARY" property="salary" />
+		<result column="COMMISSION_PCT" property="commissionPct" />
+		<result column="MANAGER_ID" property="managerId" />
+		<collection resultMap="DepartmentMap" property="department" />
+	</resultMap>
+
 	<select id="selectEmployeeCount" resultType="int">
 		SELECT COUNT(*) FROM EMPLOYEES
 	</select>
 
-	<select id="selectEmployees" parameterType="Map" resultType="Employee">
+	<select id="selectEmployees" parameterType="Map" resultMap="EmployeeMap">
 		SELECT A.*
 			FROM (SELECT ROW_NUMBER() OVER (ORDER BY HIRE_DATE DESC) AS RN, E.*, D.DEPARTMENT_NAME
 			FROM DEPARTMENTS D RIGHT JOIN EMPLOYEES E
@@ -30,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</where>
 	</select>
 
-	<select id="selectFindList" parameterType="Map" resultType="Employee">
+	<select id="selectFindList" parameterType="Map" resultMap="EmployeeMap">
 		SELECT A.*
 		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY E.HIRE_DATE DESC) AS RN, E.*, D.DEPARTMENT_NAME
 		          FROM DEPARTMENTS D RIGHT JOIN EMPLOYEES E

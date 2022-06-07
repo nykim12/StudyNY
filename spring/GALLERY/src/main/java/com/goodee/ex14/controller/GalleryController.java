@@ -1,19 +1,13 @@
 package com.goodee.ex14.controller;
 
-import java.io.File;
-import java.nio.file.Files;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -21,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.goodee.ex14.domain.FileAttach;
 import com.goodee.ex14.service.GalleryService;
 
 @Controller
@@ -49,34 +42,8 @@ public class GalleryController {
 
 	@ResponseBody
 	@GetMapping("/gallery/display")
-	public ResponseEntity<byte[]> display(long fileAttachNo,
-			@RequestParam(value = "type", required = false, defaultValue = "image") String type) {
-
-//		보내줘야 할 이미지 정보(path, saved) 읽기
-		FileAttach fileAttach = galleryService.findFileAttachByNo(fileAttachNo);
-
-		File file = null;
-
-		switch (type) {
-		case "thumb":
-			file = new File(fileAttach.getPath(), "s_" + fileAttach.getSaved());
-			break;
-		case "image":
-			file = new File(fileAttach.getPath(), fileAttach.getSaved());
-			break;
-		}
-
-		ResponseEntity<byte[]> entity = null;
-		try {
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("Content-Type", Files.probeContentType(file.toPath()));
-			entity = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(file), headers, HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return entity;
-
+	public ResponseEntity<byte[]> display(Long fileAttachNo, @RequestParam(value="type", required=false, defaultValue="image") String type) {
+		return galleryService.display(fileAttachNo, type);		
 	}
 
 	@GetMapping("/gallery/detail")
@@ -90,7 +57,7 @@ public class GalleryController {
 	public ResponseEntity<Resource> download(@RequestHeader("User-Agent") String userAgent, long fileAttachNo) {
 		return galleryService.download(userAgent, fileAttachNo);
 	}
-	
+
 	@GetMapping("/gallery/savePage")
 	public String savePage() {
 		return "gallery/save";
@@ -98,9 +65,29 @@ public class GalleryController {
 
 	@PostMapping("/gallery/save")
 	public void save(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) {
-
 		galleryService.save(multipartRequest, response);
+	}
 
+	@GetMapping("/gallery/remove")
+	public void remove(HttpServletRequest request, HttpServletResponse response) {
+		galleryService.removeGallery(request, response);
+	}
+	
+	@GetMapping("/gallery/changePage")
+	public String changePage(HttpServletRequest request, Model model) {
+		galleryService.findGalleryByNo(request, model);
+		return "gallery/change";
+	}
+
+	@PostMapping("/gallery/change")
+	public void change(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) {
+		galleryService.change(multipartRequest, response);
+	}
+	
+	@GetMapping("/gallery/removeFileAttach")
+	public String removeFileAttach(@RequestParam long fileAttachNo, @RequestParam long galleryNo) {
+		galleryService.removeFileAttach(fileAttachNo);
+		return "redirect:/gallery/detail?galleryNo=" + galleryNo;
 	}
 
 }
