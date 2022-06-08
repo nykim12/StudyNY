@@ -32,4 +32,7 @@ public interface GalleryMapper {
 
 	public int deleteFileAttach(long fileAttachNo);
 
+//	어제 저장된 첨부 파일 리스트
+	public List<FileAttach> selectFileAttachListAtYesterday();
+
 }

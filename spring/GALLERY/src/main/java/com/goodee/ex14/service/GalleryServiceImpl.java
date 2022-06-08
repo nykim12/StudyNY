@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -77,10 +78,17 @@ public class GalleryServiceImpl implements GalleryService {
 		long galleryNo = Long.parseLong(request.getParameter("galleryNo"));
 
 //		조회수 증가
-		String requestURI = request.getRequestURI();
-		if (requestURI.endsWith("detail")) {
-			galleryMapper.updateGalleryHit(galleryNo);
+		String referer = request.getHeader("referer");
+		HttpSession session = request.getSession();
+//		목록 보기에서 제목을 클릭했고, session에 updateHit 속성이 없을 경우
+		if(referer.endsWith("list") && session.getAttribute("updateHit") == null) {  
+			galleryMapper.updateGalleryHit(galleryNo);	// 조회수 증가
+			session.setAttribute("updateHit", "done");	// 조회수 증가를 했다는 의미로 session에 updateHit 속성을 저장, 리스트로 이동 시 조회가 끝난 것으로 보고 제거해야 함
 		}
+//		String requestURI = request.getRequestURI();
+//		if (requestURI.endsWith("detail")) {
+//			galleryMapper.updateGalleryHit(galleryNo);
+//		}
 
 //		갤러리 정보 가져와서 model에 저장하기
 		model.addAttribute("gallery", galleryMapper.selectGalleryByNo(galleryNo));

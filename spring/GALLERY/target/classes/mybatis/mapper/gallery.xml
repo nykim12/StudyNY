@@ -85,4 +85,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE FILE_ATTACH_NO = #{fileAttachNo}
 	</delete>
 
+	<!-- 어제 저장된 첨부된 파일 리스트 -->
+	<select id="selectFileAttachListAtYesterday" resultType="file">
+		SELECT FILE_ATTACH_NO, PATH, ORIGIN, SAVED, DOWNLOAD_CNT
+			FROM FILE_ATTACH
+		WHERE PATH = 'C:\\upload\\' || TO_CHAR(SYSDATE - 1, 'yyyy\\mm\\dd')
+	</select>
+
 </mapper>
