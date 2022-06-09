@@ -32,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
 	private MemberMapper memberMapper;
 
 	@Override
-	public void login(HttpServletRequest request) {
+	public MemberDTO login(HttpServletRequest request) {
 
 		String id = SecurityUtils.xss(request.getParameter("id"));
 		String pw = SecurityUtils.sha256(request.getParameter("pw"));
@@ -43,13 +43,14 @@ public class MemberServiceImpl implements MemberService {
 				.build();
 
 //		계정(ID, PASSWORD)이 일치하는 회원 조회
-		MemberDTO login = memberMapper.selectMemberByAccount(member);
+		MemberDTO loginMember = memberMapper.selectMemberByAccount(member);
 		
-//		계정이 일치하는 회원은 session에 저장 && 
-		if(login != null) {
-			request.getSession().setAttribute("login", login);
+//		로그인 기록 남기기
+		if(loginMember != null) {
 			memberMapper.insertMemberLog(id);
 		}
+
+		return loginMember;
 
 	}
 
