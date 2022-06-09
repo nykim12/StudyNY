@@ -161,7 +161,7 @@
 				alert('인증되었습니다.');
 				authCodePass = true;
 			} else {
-				aler('인증에 실패하였습니다.');
+				alert('인증에 실패하였습니다.');
 				authCodePass = false;
 			}
 		})

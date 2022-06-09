@@ -24,11 +24,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			AND PW = #{pw}
 	</select>
 
+	<select id="selectSignOutMemberById" parameterType="String" resultType="SignOutMemberDTO">
+		SELECT *
+			FROM SIGN_OUT_MEMBER
+		WHERE ID = #{id}
+	</select>
+
 	<insert id="insertMember" parameterType="MemberDTO">
 		INSERT INTO MEMBER
 			(MEMBER_NO, ID, PW, NAME, EMAIL, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED)
 		VALUES
 			(MEMBER_SEQ.NEXTVAL, #{id}, #{pw}, #{name}, #{email}, #{agreeState}, SYSDATE, SYSDATE, SYSDATE)
+	</insert>
+
+	<insert id="reInsertMember" parameterType="MemberDTO">
+		INSERT INTO MEMBER
+			(MEMBER_NO, ID, PW, NAME, EMAIL, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED)
+		VALUES
+			(#{memberNo}, #{id}, #{pw}, #{name}, #{email}, #{agreeState}, SYSDATE, SYSDATE, SYSDATE)
 	</insert>
 
 	<insert id="insertMemberLog" parameterType="String">
@@ -41,6 +54,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE
 			FROM MEMBER
 		WHERE MEMBER_NO = #{memberNo}
+	</delete>
+
+	<delete id="deleteSignOutMember" parameterType="String">
+		DELETE
+			FROM SIGN_OUT_MEMBER
+		WHERE ID = #{id}
 	</delete>
 
 </mapper>

@@ -30,12 +30,23 @@ public class MemberController {
 	public String loginPage() {
 		return "member/login";
 	}
-	
+
+//	login() 메소드 수행 이전 LoginInterceptor의 preHandle() 메소드가 호출
 	@PostMapping("/member/login")
 	public void login(HttpServletRequest request) {
-
 		memberService.login(request);
+	}
+//	login() 메소드 수행 이후 LoginInterceptor의 postHandle() 메소드가 호출
 
+//	LoginInterceptor의 preHandle() 메소드에서 탈퇴회원 조회 후 탈퇴회원의 경우 처리
+	@PostMapping("/member/reSignInPage")
+	public String reSignInPage() {
+		return "member/reSignIn";
+	}
+
+	@PostMapping("/member/reSignIn")
+	public void reSIgnIn(HttpServletRequest request, HttpServletResponse response) {
+		memberService.reSignIn(request, response);
 	}
 
 	@GetMapping("/member/agreePage")

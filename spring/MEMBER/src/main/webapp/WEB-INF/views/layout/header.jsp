@@ -17,7 +17,7 @@
 	<a href="${contextPath}/member/loginPage">로그인</a>
 	<a href="${contextPath}/member/agreePage">회원가입 페이지</a>
 
-	<a href="${contextPath}/member/signOut?memberNo=1">회원 탈퇴</a>
+	<a href="${contextPath}/member/signOut?memberNo=3">회원 탈퇴</a>
 
 	<hr>
 

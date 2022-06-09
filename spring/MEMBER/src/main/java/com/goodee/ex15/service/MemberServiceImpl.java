@@ -18,8 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.goodee.ex15.domain.MemberDTO;
+import com.goodee.ex15.domain.SignOutMemberDTO;
 import com.goodee.ex15.mapper.MemberMapper;
 import com.goodee.ex15.util.SecurityUtils;
 
@@ -50,8 +52,52 @@ public class MemberServiceImpl implements MemberService {
 		}
 
 	}
-	
-	
+
+	@Transactional
+	@Override
+	public void reSignIn(HttpServletRequest request, HttpServletResponse response) {
+
+		long memberNo = Long.parseLong(request.getParameter("memberNo"));
+		String id = request.getParameter("id");
+		String pw = SecurityUtils.sha256(request.getParameter("pw"));
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");		
+		int agreeState = Integer.parseInt("agreeState");
+
+		MemberDTO member = MemberDTO.builder()
+				.memberNo(memberNo)
+				.id(id)
+				.pw(pw)
+				.name(name)
+				.email(email)
+				.agreeState(agreeState)
+				.build();
+		
+		int res1 = memberMapper.reInsertMember(member);
+		int res2 = memberMapper.deleteSignOutMember(id);
+
+		try {
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+			if(res1 == 1 && res2 == 1) {
+				out.println("<script>");
+				out.println("alert('회원 가입이 완료되었습니다.')");
+				out.println("location.href='" + request.getContextPath() + "'");
+				out.println("</script>");
+				out.close();
+			} else {
+				out.println("<script>");
+				out.println("alert('회원 가입에 실패하였습니다.')");
+				out.println("history.back()");
+				out.println("</script>");
+				out.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	@Override
 	public Map<String, Object> idCheck(String id) {
 		Map<String, Object> map = new HashMap<>();
@@ -109,6 +155,12 @@ public class MemberServiceImpl implements MemberService {
 		return map;
 	}
 
+	@Override
+	public SignOutMemberDTO findSignOutMember(String id) {
+
+		return memberMapper.selectSignOutMemberById(id);
+	}
+	
 	@Override
 	public void signIn(HttpServletRequest request, HttpServletResponse response) {
 
