@@ -30,6 +30,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ID = #{id}
 	</select>
 
+	<select id="selectMemberBySessionId" parameterType="String" resultType="MemberDTO">
+		SELECT *
+			FROM MEMBER
+		WHERE SESSION_ID = #{sessonId}
+			AND SESSION_LIMIT > SYSDATE
+	</select>
+
 	<insert id="insertMember" parameterType="MemberDTO">
 		INSERT INTO MEMBER
 			(MEMBER_NO, ID, PW, NAME, EMAIL, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED)
@@ -49,6 +56,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES
 			(MEMBER_LOG_SEQ.NEXTVAL, #{id}, SYSDATE)
 	</insert>
+
+	<update id="updateSessionInfo" parameterType="MemberDTO">
+		UPDATE MEMBER
+			SET SESSION_ID = #{sessionId}
+				, SESSION_LIMIT = #{sessionLimit}
+			WHERE ID = #{id}
+	</update>
 
 	<delete id="deleteMember" parameterType="long">
 		DELETE

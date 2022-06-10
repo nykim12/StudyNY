@@ -1,6 +1,7 @@
 package com.goodee.ex15.service;
 
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -63,7 +64,7 @@ public class MemberServiceImpl implements MemberService {
 		String pw = SecurityUtils.sha256(request.getParameter("pw"));
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");		
-		int agreeState = Integer.parseInt("agreeState");
+		int agreeState = Integer.parseInt(request.getParameter("agreeState"));
 
 		MemberDTO member = MemberDTO.builder()
 				.memberNo(memberNo)
@@ -147,6 +148,7 @@ public class MemberServiceImpl implements MemberService {
 			message.setSubject("인증 요청 메일입니다.");
 			message.setText("인증번호는 " + authCode + "입니다.");
 			Transport.send(message);
+			System.out.println(authCode);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -227,6 +229,7 @@ public class MemberServiceImpl implements MemberService {
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
 			if(res == 1) {
+				request.getSession().invalidate();
 				out.println("<script>");
 				out.println("alert('탈퇴 완료')");
 				out.println("location.href='" + request.getContextPath() + "'");
@@ -243,6 +246,29 @@ public class MemberServiceImpl implements MemberService {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public void keepLogin(HttpServletRequest request) {
+
+//		1000 * 60 * 60 * 24 * 7 : 7일에 해당하는 밀리초(ms)
+		Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 7));	// 현재 날짜의 7일 이후
+		String sessionId = request.getSession().getId();
+		String id = request.getParameter("id");
+
+		MemberDTO member = MemberDTO.builder()
+				.id(id)
+				.sessionId(sessionId)
+				.sessionLimit(sessionLimit)
+				.build();
+
+		memberMapper.updateSessionInfo(member);
+
+	}
+
+	@Override
+	public MemberDTO getMemberBySessionid(String sessionId) {
+		return memberMapper.selectMemberBySessionId(sessionId);
 	}
 
 }

@@ -13,7 +13,7 @@ public interface MemberMapper {
 	public MemberDTO selectMemberByEmail(String email);
 
 	public MemberDTO selectMemberByAccount(MemberDTO member);
-	
+
 	public SignOutMemberDTO selectSignOutMemberById(String id);
 
 	public int insertMember(MemberDTO member);
@@ -25,5 +25,9 @@ public interface MemberMapper {
 	public int deleteMember(long memberNo);
 
 	public int deleteSignOutMember(String id);
+
+	public int updateSessionInfo(MemberDTO member);
+
+	public MemberDTO selectMemberBySessionId(String sessionId);
 
 }

@@ -16,10 +16,12 @@
 
 	<c:if test="${loginMember == null}">
 		<a href="${contextPath}/member/loginPage">로그인</a>
-		<a href="${contextPath}/member/agreePage">회원가입 페이지</a>
+		<a href="${contextPath}/member/agreePage">회원가입</a>
 	</c:if>
 
 	<c:if test="${loginMember != null}">
+		${loginMember.name} 님, 반갑습니다.&nbsp;&nbsp;&nbsp;
+		<a href="${contextPath}/member/logout">로그아웃</a>
 		<a href="${contextPath}/member/signOut?memberNo=${loginMember.memberNo}">회원 탈퇴</a>
 	</c:if>
 

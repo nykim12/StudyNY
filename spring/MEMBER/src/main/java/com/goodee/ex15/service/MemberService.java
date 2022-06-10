@@ -26,4 +26,8 @@ public interface MemberService {
 
 	public void reSignIn(HttpServletRequest request, HttpServletResponse response);
 
+	public void keepLogin(HttpServletRequest request);
+
+	public MemberDTO getMemberBySessionid(String sessionId);
+
 }

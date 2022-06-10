@@ -16,5 +16,7 @@
 
 	<h1>MAIN PAGE</h1>
 
+	<a href="${contextPath}/board/savePage">새글작성</a>
+
 </body>
 </html>

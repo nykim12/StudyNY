@@ -2,6 +2,7 @@ package com.goodee.ex15.interceptor;
 
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -55,13 +56,44 @@ public class LoginInterceptor implements HandlerInterceptor {
 //		ModelAndView를 Map으로 변환 후 loginMember 추출
 		Map<String, Object> map = modelAndView.getModel();
 		Object loginMember = map.get("loginMember");
+		Object url = map.get("url");
 
 //		loginMember가 있을 경우(로그인 성공) session 저장
 		if (loginMember != null) {
-			request.getSession().setAttribute("loginMember", loginMember);
+//			session에 loginMember 저장
+			HttpSession session = request.getSession();
+			session.setAttribute("loginMember", loginMember);
+//			로그인 유지를 체크한 사용자는 "keepLogin"의 쿠키명으로 session_id 값을 저장해둔다.
+			String keepLogin = request.getParameter("keepLogin");
+			if(keepLogin != null && keepLogin.equals("keep")) {
+//				keepLogin 쿠키 만들기
+				Cookie cookie = new Cookie("keepLogin", session.getId());
+				cookie.setMaxAge(60 * 60 * 24 * 7);
+//				keepLogin 쿠키 저장하기
+				response.addCookie(cookie);
+
+//				로그인 유지를 체크하지 않은 사용자는 "keepLogin" 쿠키 제거
+			} else {
+//				keepLogin 쿠키 제거
+				Cookie cookie = new Cookie("keepLogin", "");
+				cookie.setMaxAge(0);
+				response.addCookie(cookie);
+			}
+
+//			로그인 이전 화면 정보가 없을 경우
+			if(url.toString().isEmpty()) {
+				response.sendRedirect(request.getContextPath());
+			} else {	// 로그인 이전 화면 정보가 있는 경우
+				response.sendRedirect(url.toString());
+			}
 		} else {
-			response.sendRedirect(request.getContextPath() + "/member/loginPage");
+			if(url.toString().isEmpty()) {
+				response.sendRedirect(request.getContextPath() + "/member/loginPage");
+			} else {
+				response.sendRedirect(request.getContextPath() + "/member/loginPage?url=" + url.toString());
+			}
 		}
+
 	}
 
 }
