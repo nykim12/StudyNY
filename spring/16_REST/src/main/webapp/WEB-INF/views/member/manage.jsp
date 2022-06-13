@@ -66,7 +66,14 @@
 	}
 
 	function fnList(){
-		
+		let members = '';
+		members += '<tr><td><input type="checkbox" class="CheckOnes" value="1"></td></tr>';
+		members += '<tr><td><input type="checkbox" class="CheckOnes" value="2"></td></tr>';
+		members += '<tr><td><input type="checkbox" class="CheckOnes" value="3"></td></tr>';
+		members += '<tr><td><input type="checkbox" class="CheckOnes" value="4"></td></tr>';
+		members += '<tr><td><input type="checkbox" class="CheckOnes" value="5"></td></tr>';
+		$('#members').empty();
+		$('#members').html(members);
 	}
 
 </script>
