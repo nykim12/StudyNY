@@ -1,0 +1,17 @@
+REST : REpresentational State Transfer
+
+1.	정의
+	자원을 정의하고 자원의 주소를 지정하는 방식에 대한 하나의 형식
+	REST 방식을 따르는 시스템을 RESTful이라고 함.
+
+2.	URL과 Method를 결합하여 동작이 결정됨
+
+3.	URL과 파라미터가 경로처럼 포함되어 사용됨
+
+4.	CRUD 처리
+				URL			  Method
+	목록		/members			GET
+	상세		/members/1			GET
+	삽입		/members/			POST
+	수정		/members			PUT
+	삭제		/members/1			DELETE
