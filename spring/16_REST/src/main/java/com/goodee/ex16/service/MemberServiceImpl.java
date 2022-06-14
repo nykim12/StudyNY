@@ -13,13 +13,14 @@ import org.springframework.stereotype.Service;
 
 import com.goodee.ex16.domain.MemberDTO;
 import com.goodee.ex16.mapper.MemberMapper;
+import com.goodee.ex16.util.PageUtils;
 
 @Service
 public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberMapper memberMapper;
-
+	
 	@Override
 	public Map<String, Object> addMember(MemberDTO member, HttpServletResponse response) {
 		try {
@@ -52,7 +53,7 @@ public class MemberServiceImpl implements MemberService {
 				System.out.println(e.getClass().getName());
 				PrintWriter out = response.getWriter();
 				response.setContentType("text/plain");
-				response.setStatus(502);
+				response.setStatus(503);
 				out.println("잘못된 데이터가 전달되었습니다.");
 				out.close();
 			} catch (Exception e2) {
@@ -61,5 +62,27 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return null;  // 사용되지 않는 반환
 	}
-
+	
+	@Override
+	public Map<String, Object> getMembers(int page) {
+		
+		// page와 totalRecord를 이용해서 페이징 정보를 구한다.
+		long totalRecord = memberMapper.selectMemberCount();
+		PageUtils p = new PageUtils();
+		p.setPageEntity(totalRecord, page);
+		
+		// 목록은 beginRecord~endRecord 사이값을 가져온다.
+		Map<String, Object> m = new HashMap<>();
+		m.put("beginRecord", p.getBeginRecord());
+		m.put("endRecord", p.getEndRecord());
+		
+		// 목록과 페이징 정보를 반환한다.
+		Map<String, Object> map = new HashMap<>();
+		map.put("members", memberMapper.selectMemberList(m));
+		map.put("p", p);
+		return map;
+		
+	}
+	
+	
 }

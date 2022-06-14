@@ -15,6 +15,8 @@
 		fnInit();
 		fnAdd();
 		fnList();
+		fnCheckAll();
+		fnCheckOne();
 	})
 
 	function fnInit(){
@@ -33,7 +35,7 @@
 				{
 					id: $('#id').val(),
 					name: $('#name').val(),
-					//gender: $(':radio[name="gender"]:checked').val(),
+					gender: $(':radio[name="gender"]:checked').val(),
 					address: $('#address').val()
 				}
 			)
@@ -55,28 +57,137 @@
 					}
 				},
 				error: function(jqXHR){
-					if(jqXHR.status == 501){	// 아이디 중복 코드
-						alert(jqXHR.responseText);
-					} else if(jqXHR.status == 502) {	// 필수 정보 누락 코드
-						alert(jqXHR.responseText);
-					}
+					alert('예외코드[' + jqXHR.status + ']' + jqXHR.responseText);
 				}
 			})
 		})
 	}
 
+	var page = 1;
 	function fnList(){
-		let members = '';
-		members += '<tr><td><input type="checkbox" class="CheckOnes" value="1"></td></tr>';
-		members += '<tr><td><input type="checkbox" class="CheckOnes" value="2"></td></tr>';
-		members += '<tr><td><input type="checkbox" class="CheckOnes" value="3"></td></tr>';
-		members += '<tr><td><input type="checkbox" class="CheckOnes" value="4"></td></tr>';
-		members += '<tr><td><input type="checkbox" class="CheckOnes" value="5"></td></tr>';
+		$.ajax({
+			url: '${contextPath}/members/page/' + page,
+			type: 'GET',
+			dataType: 'json',
+			success: function(obj){
+				fnPrintMemberList(obj.members);
+				fnPrintPaging(obj.p);
+			}
+		})
+	}
+
+	function fnPrintPaging(p){
+		$('#paging').empty();
+
+		var paging = '';
+
+		//	⏪	: 이전 블록으로 이동
+		if(page <= p.pagePerBlock){
+			paging += '<div class="disable_link">⏪</div>';
+		} else {
+			paging += '<div class="enable_link" data-page="' + (p.beginPage + 1) + '">⏪</div>';
+		}
+
+		//	◀	: 이전 페이지로 이동
+		if(page == 1){
+			paging += '<div class="disable_link">◀</div>';
+		} else {
+			paging += '<div class="enable_link" data-page="' + (page - 1) + '">◀</div>';
+		}
+
+		//	1 2 3 4 5	: 페이지 번호
+		for(let i = p.beginPage; i <= p.endPage; i++){
+			if(i == page){
+				paging += '<div class="disable_link now_page">' + i + '</div>';
+			} else {
+				paging += '<div class="enable_link" data-page="' + i + '">' + i + '</div>';
+			}
+		}
+
+		//	▶	: 다음 페이지로 이동
+		if(page == p.totalPage){
+			paging += '<div class="disable_link">▶</div>';
+		} else {
+			paging += '<div class="enable_link" data-page="' + (page + 1) + '">▶</div>';
+		}
+
+		//	⏩	: 다음 블록으로 이동
+		if(p.endPage == p.totalPage){
+			paging += '<div class="disable_link">⏩</div>';
+		} else {
+			paging += '<div class="enable_link" data-page="' + (p.endPage + 1) + '">⏩</div>';
+		}
+
+		$('#paging').append(paging);
+	}
+
+	function fnPrintMemberList(members){
 		$('#members').empty();
-		$('#members').html(members);
+		$.each(members, function(i, member){
+			var tr = '<tr>';
+			tr += '<td><input type="checkbox" class="checkOne" value="' + member.memberNo + '"></td>';
+			tr += '<td>' + member.id + '</td>';
+			tr += '<td>' + member.name + '</td>';
+			tr += '<td>' + member.gender + '</td>';
+			tr += '<td>' + member.address + '</td>';
+			tr += '<td><input type="button" value="조회" class="btnDetail" data-member_no="' + member.memberNo + '"></td>';
+			tr += '</tr>';
+			$('#members').append(tr);
+		})
+	}
+
+	function fnPagingLink(){
+		$(document).on('click', '.enable_link', function(){
+			page = $(this).data('page');
+			fnList();
+		})
+	}
+	
+	function fnCheckAll(){
+		$('#checkAll').on('click', function(){
+			$('.checkOne').prop('checked', $('#checkAll').prop('checked'));
+		})
+	}
+
+	function fnCheckOne(){
+		$(document).on('click', '.checkOne', function(){
+			let checkCount = 0;
+			for(let i = 0; i < $('.checkOne').length; i++){
+				checkCount += $($('.checkOne')[i]).prop('checked')
+			}
+			$('#checkAll').prop('checked', checkCount == $('.checkOne').length);
+		})
 	}
 
 </script>
+<style>
+
+	#paging {
+		display : flex;
+		justify-content: center;	
+	}
+
+	#paging div {
+		width:  32px;
+		height: 20px;
+		text-align: center;
+	}
+
+	.disable_link {
+		color: lightgray;
+	}
+
+	.enable_link {
+		cursor: pointer;	
+	}
+
+	.now_page {
+		border: 1px solid gray;
+		color: limegreen;
+		font-weight: 900;
+	}
+
+</style>
 <title>Insert title here</title>
 </head>
 <body>
@@ -86,9 +197,10 @@
 	<div>
 		아이디	<input type="text" name="id" id="id"><br>
 		이름	<input type="text" name="name" id="name"><br>
-		<!-- 성별
+		성별
 		<label for="male"><input type="radio" name="gender" value="M" id="male">남</label>
-		<label for="female"><input type="radio" name="gender" value="F" id="female">여</label><br> -->
+		<label for="female"><input type="radio" name="gender" value="F" id="female">여</label>
+		<label for="none"><input type="radio" name="gender" value="NONE" id="none" checked></label><br>
 		주소	<input type="text" name="address" id="address"><br><br>
 		<input type="button" value="초기화" id="btnInit">
 		<input type="button" value="등록" id="btnAdd">
@@ -98,10 +210,9 @@
 	<hr>
 
 	<table border="1">
-		<caption id="paging"></caption>
 		<thead>
 			<tr>
-				<td><input type="checkbox"></td>
+				<td><input type="checkbox" id="checkAll"></td>
 				<td>아이디</td>
 				<td>이름</td>
 				<td>성별</td>
@@ -112,11 +223,16 @@
 		<tbody id="members"></tbody>
 		<tfoot>
 			<tr>
-				<td colspan="5">
-					<input type="button" value="선택삭제" id="btnRemove">
+				<td colspan="6">
+					<div id="paging"></div>
 				</td>
 			</tr>
 		</tfoot>
 	</table>
+
+	<br>
+
+	<input type="button" value="선택삭제" id="btnRemove">
+	
 </body>
 </html>
