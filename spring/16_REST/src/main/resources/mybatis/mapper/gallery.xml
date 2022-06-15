@@ -5,6 +5,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.goodee.ex16.mapper.GalleryMapper">
 
-	
+	<!-- selectKey : GALLERY_SEQ.NEXTVAL 값을 INSERT문을 실행하기 전(order="BEFORE") 미리 Gallery의 galleryNo에 넣어두기 -->
+	<insert id="insertGallery" parameterType="gallery">
+		<selectKey keyProperty="galleryNo" resultType="Long" order="BEFORE">
+			SELECT GALLERY_SEQ.NEXTVAL
+				FROM DUAL
+		</selectKey>
+		INSERT INTO GALLERY
+			(GALLERY_NO, WRITER, TITLE, CONTENT, IP, HIT, CREATED, MODIFIED)
+		VALUES
+			(#{galleryNo}, #{writer}, #{title}, #{content}, #{ip}, 0, SYSDATE, SYSDATE)
+	</insert>
+
+	<insert id="insertFile" parameterType="file">
+		INSERT INTO FILE_ATTACH
+			(FILE_ATTACH_NO, PATH, ORIGIN, SAVED, DOWNLOAD_CNT, GALLERY_NO)
+		VALUES
+			(FILE_SEQ.NEXTVAL, #{path}, #{origin}, #{saved}, 0, #{galleryNo})
+	</insert>
 
 </mapper>

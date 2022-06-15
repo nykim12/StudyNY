@@ -15,8 +15,9 @@
 </script>
 </head>
 <body>
-	
+
 	<a href="${contextPath}/member/management">회원관리</a>
-	
+	<a href="${contextPath}/gallery/management">갤러리관리</a>
+
 </body>
 </html>

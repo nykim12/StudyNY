@@ -35,10 +35,6 @@
 			let deleteCount = 0;
 			let checkedCount = 0;
 			for(let i = 0; i < $('.checkOne').length; i++){
-				/*
-					$('.checkOne')[i].value;
-					$($('.checkOne')[i]).val();
-				*/
 				if($($('.checkOne')[i]).is(':checked')){
 					checkedCount += 1;
 					$.ajax({
