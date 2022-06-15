@@ -9,9 +9,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="resources/js/jquery-3.6.0.js"></script>
+<script>
+
+</script>
 </head>
 <body>
-
+	
 	<a href="${contextPath}/member/management">회원관리</a>
 	
 </body>

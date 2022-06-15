@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<typeAliases>
 		<typeAlias type="com.goodee.ex16.domain.MemberDTO" alias="MemberDTO" />
 		<typeAlias type="com.goodee.ex16.domain.GalleryDTO" alias="GalleryDTO" />
+		<typeAlias type="com.goodee.ex16.domain.FileAttachDTO" alias="FileAttachDTO" />
 	</typeAliases>
 	
 </configuration>
